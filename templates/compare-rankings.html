@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK & Ireland University Rankings 2026 - University Tuition Compare</title>
+    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="overflow-x-hidden dark:bg-darkmode">
+    {% include 'partials/header.html' %}
+    
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+            <div class="container">
+                <div class="text-center">
+                    <h1 data-aos="fade-up">Compare University Rankings</h1>
+                    <p class="text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                        Compare universities across multiple ranking criteria and make an informed decision
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Form Section -->
+        <section class="bg-white dark:bg-darkmode py-12">
+            <div class="container">
+                <!-- Comparison Form -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 shadow-lg p-8 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    <form id="rankings-compare-form" class="space-y-6">
+                        <!-- Destination Country -->
+                        <div>
+                            <label for="ranking-country" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
+                                Destination Country <span class="text-red-500">*</span>
+                            </label>
+                            <select id="ranking-country" name="country" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Select Destination Country</option>
+                                <option value="uk">UK</option>
+                                <option value="ireland">Ireland</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Search Button -->
+                        <div class="flex justify-center pt-4">
+                            <button type="submit" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden">
+                                <span class="!px-12">Compare Rankings</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Rankings Comparison Section -->
+        <section id="rankings-section" class="hidden bg-white dark:bg-darkmode">
+            <div class="container">
+                <h2 class="text-32 mb-8">University Rankings Comparison</h2>
+                
+                <!-- Ranking Categories -->
+                <div class="space-y-8">
+                    <!-- Subject Rankings -->
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 p-6 shadow-round-box">
+                        <h3 class="text-24 font-bold mb-6 text-primary">Rankings by Subject</h3>
+                        
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Arts & Humanities -->
+                            <div class="p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 flex items-center">
+                                    <span class="text-2xl mr-2">🎨</span>
+                                    Arts & Humanities
+                                </h4>
+                                <div class="space-y-2" id="arts-rankings">
+                                    <!-- Top 5 universities will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Life Sciences & Medicine -->
+                            <div class="p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 flex items-center">
+                                    <span class="text-2xl mr-2">🔬</span>
+                                    Life Sciences & Medicine
+                                </h4>
+                                <div class="space-y-2" id="medicine-rankings">
+                                    <!-- Top 5 universities will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Engineering & Technology -->
+                            <div class="p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 flex items-center">
+                                    <span class="text-2xl mr-2">⚙️</span>
+                                    Engineering & Technology
+                                </h4>
+                                <div class="space-y-2" id="engineering-rankings">
+                                    <!-- Top 5 universities will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Natural Sciences -->
+                            <div class="p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 flex items-center">
+                                    <span class="text-2xl mr-2">🔬</span>
+                                    Medical & Life Sciences
+                                </h4>
+                                <div class="space-y-2" id="science-rankings">
+                                    <!-- Top 5 universities will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Social Sciences & Management -->
+                            <div class="p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 flex items-center">
+                                    <span class="text-2xl mr-2">📊</span>
+                                    Social Sciences & Management
+                                </h4>
+                                <div class="space-y-2" id="social-rankings">
+                                    <!-- Top 5 universities will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other Metrics -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Staff-to-Student Ratio -->
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4 flex items-center">
+                                <span class="text-2xl mr-2">👥</span>
+                                Best Staff-to-Student Ratio
+                            </h3>
+                            <div class="space-y-3" id="staff-ratio-rankings">
+                                <!-- Rankings will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- International Students -->
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4 flex items-center">
+                                <span class="text-2xl mr-2">🌍</span>
+                                Highest Proportion of International Students
+                            </h3>
+                            <div class="space-y-3" id="international-rankings">
+                                <!-- Rankings will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Graduate Prospects -->
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4 flex items-center">
+                                <span class="text-2xl mr-2">🎓</span>
+                                Best Graduate Prospects
+                            </h3>
+                            <div class="space-y-3" id="graduate-rankings">
+                                <!-- Rankings will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Student Satisfaction -->
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4 flex items-center">
+                                <span class="text-2xl mr-2">⭐</span>
+                                Highest Student Satisfaction
+                            </h3>
+                            <div class="space-y-3" id="satisfaction-rankings">
+                                <!-- Rankings will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    {% include 'partials/footer.html' %}
+    
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-all duration-300 z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/compare-rankings.js' %}"></script>
+</body>
+</html>

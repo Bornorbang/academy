@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare University Tuition Fees in UK & Ireland - University Tuition Compare</title>
+    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="overflow-x-hidden dark:bg-darkmode">
+    {% include 'partials/header.html' %}
+    
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+            <div class="container">
+                <div class="text-center">
+                    <h1 data-aos="fade-up">Compare Tuition Fees</h1>
+                    <p class="text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                        Find the best value for your education. Compare tuition fees, scholarships, and total costs across universities
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Form Section -->
+        <section class="bg-white dark:bg-darkmode py-12">
+            <div class="container">
+                <!-- Comparison Form -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 shadow-lg p-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    <form id="tuition-compare-form" class="space-y-6">
+                        <!-- Country of Residence -->
+                        <div>
+                            <label for="residence-country" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
+                                Country of Residence <span class="text-red-500">*</span>
+                            </label>
+                            <select id="residence-country" name="residence" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Select Your Country</option>
+                                <option value="NG">Nigeria</option>
+                                <option value="GH">Ghana</option>
+                                <option value="KE">Kenya</option>
+                                <option value="ZA">South Africa</option>
+                                <option value="US">United States</option>
+                                <option value="IN">India</option>
+                                <option value="CN">China</option>
+                                <option value="PK">Pakistan</option>
+                                <option value="BD">Bangladesh</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Destination Country -->
+                        <div>
+                            <label for="dest-country" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
+                                Destination Country <span class="text-red-500">*</span>
+                            </label>
+                            <select id="dest-country" name="destination" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Select Destination Country</option>
+                                <option value="uk">UK</option>
+                                <option value="ireland">Ireland</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Programme Type -->
+                        <div>
+                            <label for="programme-type" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
+                                Programme Type <span class="text-red-500">*</span>
+                            </label>
+                            <select id="programme-type" name="programme" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Select Programme Type</option>
+                                <option value="undergraduate">Undergraduate</option>
+                                <option value="postgraduate">Postgraduate</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Subject -->
+                        <div>
+                            <label for="subject" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
+                                Subject <span class="text-red-500">*</span>
+                            </label>
+                            <select id="subject" name="subject" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Select Subject</option>
+                                <option value="business">Business & Management</option>
+                                <option value="computer_science">Computer Science</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="medicine">Medicine & Health</option>
+                                <option value="law">Law</option>
+                                <option value="arts">Arts & Humanities</option>
+                                <option value="science">Natural Sciences</option>
+                                <option value="social_science">Social Sciences</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Search Button -->
+                        <div class="flex justify-center pt-4">
+                            <button type="submit" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden">
+                                <span class="!px-12">Compare Fees</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Currency Converter Info -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">
+                        💱 Fees will be displayed in both GBP and your local currency
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Results Section -->
+        <section id="comparison-results" class="hidden bg-white dark:bg-darkmode">
+            <div class="container">
+                <div class="mb-8">
+                    <h2 class="text-32 mb-4">Tuition Fee Comparison</h2>
+                    <div class="flex flex-wrap gap-4 items-center justify-between">
+                        <p class="text-SlateBlueText dark:text-opacity-80" id="comparison-count">0 universities found</p>
+                        <div class="flex gap-3">
+                            <button id="sort-cheapest" class="btn_outline btn-2 hover-outline-slide-down">
+                                <span class="!py-2 !px-4">Sort by Lowest Fee</span>
+                            </button>
+                            <button id="sort-scholarship" class="btn_outline btn-2 hover-outline-slide-down">
+                                <span class="!py-2 !px-4">Best Scholarships</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Comparison Grid -->
+                <div id="comparison-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- University comparison cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    {% include 'partials/footer.html' %}
+    
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-all duration-300 z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/compare-tuition.js' %}"></script>
+</body>
+</html>

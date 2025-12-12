@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Universities in UK & Ireland - University Tuition Compare</title>
+    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="overflow-x-hidden dark:bg-darkmode">
+    {% include 'partials/header.html' %}
+    
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+            <div class="container">
+                <h1 class="text-center" data-aos="fade-up">Explore Universities</h1>
+                <p class="text-center text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Browse through all UK and Irish universities and find your perfect match
+                </p>
+            </div>
+        </section>
+        
+        <!-- Filter & Search Section -->
+        <section class="dark:bg-darkmode py-8">
+            <div class="container">
+                <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 mb-8">
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <!-- University Name -->
+                        <input type="text" id="filter-name" placeholder="Search by university name..." 
+                               class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary">
+                        
+                        <!-- Country Filter -->
+                        <select id="filter-country" class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary">
+                            <option value="">Filter by Country</option>
+                            <option value="uk">UK</option>
+                            <option value="ireland">Ireland</option>
+                        </select>
+                        
+                        <!-- City Filter -->
+                        <input type="text" id="filter-city" placeholder="Filter by city..." 
+                               class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary">
+                        
+                        <!-- Clear Filters -->
+                        <button id="clear-filters" class="btn_outline btn-2 hover-outline-slide-down">
+                            <span class="!py-2">Clear Filters</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Count -->
+                <div class="mb-6">
+                    <p class="text-SlateBlueText dark:text-opacity-80" id="university-count">Showing 0 universities</p>
+                </div>
+                
+                <!-- University Grid -->
+                <div id="universities-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- University cards will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    {% include 'partials/footer.html' %}
+    
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-all duration-300 z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/university-search.js' %}"></script>
+</body>
+</html>

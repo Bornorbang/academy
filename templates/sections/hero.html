@@ -1,0 +1,104 @@
+<section class="bg-secondary pt-24 md:pt-12 pb-8 md:pb-12">
+    <div class="container">
+        <div class="grid lg:grid-cols-12 grid-cols-1 items-center gap-30">
+            <div class="lg:col-span-7 col-span-12 pt-6">
+                <p
+                    data-aos="fade-up"
+                    data-aos-delay="200"
+                    data-aos-duration="1000"
+                    class="relative z-0 inline-block text-primary text-lg font-bold before:absolute before:content-[''] before:bg-primary/20 before:w-full before:h-2 before:-z-1 dark:before:-z-1 before:bottom-0"
+                >
+                    Compare University Tuition Fees
+                </p>
+                <h1
+                    class="py-6 text-3xl md:text-4xl font-bold text-white"
+                    data-aos="fade-up"
+                    data-aos-delay="300"
+                    data-aos-duration="1000"
+                >
+                    Find Your Best University Match
+                </h1>
+                <p
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                    data-aos-duration="1000"
+                    class="text-lg text-white text-opacity-80 font-normal pb-12"
+                >
+                    Compare tuition fees and rankings across UK and Irish universities.
+                </p>
+                <div
+                    data-aos="fade-up"
+                    data-aos-delay="500"
+                    data-aos-duration="1000"
+                    class="space-y-8"
+                >
+                    <div class="flex flex-col md:flex-row items-stretch bg-white dark:bg-secondary border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden shadow-sm max-w-2xl relative">
+                        <div class="relative flex-1">
+                            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input
+                                type="text"
+                                id="hero-search-input"
+                                placeholder="Search Courses"
+                                autocomplete="off"
+                                class="w-full h-full pl-12 pr-4 py-3.5 border-0 focus:outline-none focus:ring-0 dark:bg-secondary dark:text-white"
+                            />
+                            <!-- Suggestions Dropdown -->
+                            <div id="hero-suggestions" class="hidden absolute top-full left-0 right-0 bg-white dark:bg-secondary border border-gray-300 dark:border-gray-600 rounded-b-lg shadow-lg max-h-80 overflow-y-auto z-50 mt-0.5">
+                                <!-- Suggestions will be populated here -->
+                            </div>
+                        </div>
+                        <div class="border-t md:border-t-0 md:border-l border-gray-300 dark:border-gray-600"></div>
+                        <div class="flex">
+                            <select id="hero-level-select" class="flex-1 px-4 py-3.5 border-0 focus:outline-none focus:ring-0 dark:bg-secondary dark:text-white appearance-none bg-no-repeat bg-right pr-10 cursor-pointer min-w-[120px]" style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-position: right 0.5rem center; background-size: 1.5em 1.5em;">
+                                <option value="undergraduate">Undergraduate</option>
+                                <option value="postgraduate">Postgraduate</option>
+                            </select>
+                            <div class="border-l border-gray-300 dark:border-gray-600"></div>
+                            <button id="hero-search-btn" class="btn btn-1 hover-filled-slide-down rounded-none flex-1">
+                                <span class="!px-8 !py-3.5 font-semibold whitespace-nowrap">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-white text-opacity-80">
+                        <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span>Trusted by 200k+ students every year.</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                data-aos="fade-left"
+                data-aos-delay="200"
+                data-aos-duration="1000"
+                class="lg:col-span-5 col-span-12 lg:flex hidden items-center gap-3"
+            >
+                <div class="bg-ElectricAqua relative rounded-tl-166 rounded-br-166 w-full">
+                    <img
+                        src="/static/images/hero/john.png"
+                        alt="University Student"
+                        class="w-full h-full"
+                    />
+                    <div class="bg-yellow-300 rounded-22 shadow-hero-box py-4 px-5 absolute top-16 -left-20">
+                        <p class="text-lg font-bold text-yellow-900">Top Rankings</p>
+                        <p class="text-base font-medium text-yellow-900 text-center">
+                            4.8 rating
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-primary relative rounded-tr-166 rounded-bl-166 w-full mt-32">
+                    <img
+                        src="/static/images/hero/maria.png"
+                        alt="University Graduate"
+                        class="w-full h-full"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Divider -->
+<div class="border-t border-gray-200 dark:border-gray-700"></div>

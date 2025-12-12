@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK & Ireland University Scholarships - University Tuition Compare</title>
+    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="overflow-x-hidden dark:bg-darkmode">
+    {% include 'partials/header.html' %}
+    
+    <main class="pt-24">
+        <!-- Hero Section -->
+        <section class="bg-IcyBreeze dark:bg-darklight py-16">
+            <div class="container">
+                <div class="text-center mb-8">
+                    <h1 data-aos="fade-up">Find Scholarships</h1>
+                    <p class="text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                        Discover funding opportunities to support your educational journey in UK and Ireland
+                    </p>
+                </div>
+                
+                <div class="flex justify-center" data-aos="fade-up" data-aos-delay="200">
+                    <button id="find-scholarships-btn" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden">
+                        <span class="!px-12">Find Scholarships</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Scholarships Grid -->
+        <section id="scholarships-section" class="dark:bg-darkmode">
+            <div class="container">
+                <div class="mb-8">
+                    <h2 class="text-32">Available Scholarships</h2>
+                    <p class="text-SlateBlueText dark:text-opacity-80 mt-2">Current and upcoming scholarship opportunities</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Scholarship Card 1 -->
+                    <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box" data-aos="fade-up">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-22 font-bold">International Excellence Scholarship</h3>
+                            <span class="px-3 py-1 bg-Aquamarine text-green-900 rounded-full text-sm font-medium">Active</span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Award Amount:</strong> £5,000 - £10,000 per year
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Deadline:</strong> June 30, 2026
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Eligible For:</strong> Undergraduate & Postgraduate International Students
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Eligibility Criteria:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Minimum GPA of 3.5/4.0 or equivalent</li>
+                                <li>International student status</li>
+                                <li>Conditional or unconditional offer from university</li>
+                                <li>Demonstrate academic excellence</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Requirements:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Completed scholarship application form</li>
+                                <li>Academic transcripts</li>
+                                <li>Personal statement (500 words)</li>
+                                <li>One academic reference letter</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden w-full">
+                            <span>Apply Now</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Scholarship Card 2 -->
+                    <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-22 font-bold">Merit-Based Scholarship</h3>
+                            <span class="px-3 py-1 bg-Aquamarine text-green-900 rounded-full text-sm font-medium">Active</span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Award Amount:</strong> £3,000 - £7,000 per year
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Deadline:</strong> July 15, 2026
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Eligible For:</strong> All International Students
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Eligibility Criteria:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Minimum GPA of 3.0/4.0 or equivalent</li>
+                                <li>Accepted to a degree program</li>
+                                <li>Demonstrated leadership skills</li>
+                                <li>Community involvement</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Requirements:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Online application form</li>
+                                <li>Academic records</li>
+                                <li>CV/Resume</li>
+                                <li>Motivation letter</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden w-full">
+                            <span>Apply Now</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Scholarship Card 3 -->
+                    <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-22 font-bold">STEM Excellence Scholarship</h3>
+                            <span class="px-3 py-1 bg-Aquamarine text-green-900 rounded-full text-sm font-medium">Active</span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Award Amount:</strong> £8,000 - £15,000 per year
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Deadline:</strong> August 31, 2026
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Eligible For:</strong> STEM Program Students
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Eligibility Criteria:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Enrolled in STEM program</li>
+                                <li>Strong academic background in sciences</li>
+                                <li>Research experience (preferred)</li>
+                                <li>International student</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Requirements:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Scholarship application</li>
+                                <li>Academic transcripts</li>
+                                <li>Research proposal (if applicable)</li>
+                                <li>Two reference letters</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden w-full">
+                            <span>Apply Now</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Scholarship Card 4 -->
+                    <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-22 font-bold">Regional Diversity Scholarship</h3>
+                            <span class="px-3 py-1 bg-LightYellow text-OliveDrab rounded-full text-sm font-medium">Upcoming</span>
+                        </div>
+                        
+                        <div class="space-y-3 mb-4">
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Award Amount:</strong> £4,000 - £8,000 per year
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Deadline:</strong> September 30, 2026
+                            </p>
+                            <p class="text-SlateBlueText dark:text-opacity-80">
+                                <strong>Eligible For:</strong> Students from Africa, Asia, South America
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Eligibility Criteria:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>From eligible regions</li>
+                                <li>Demonstrate financial need</li>
+                                <li>Academic merit</li>
+                                <li>Commitment to home country development</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold mb-2">Requirements:</h4>
+                            <ul class="list-disc list-inside text-SlateBlueText dark:text-opacity-80 space-y-1">
+                                <li>Application form</li>
+                                <li>Financial need statement</li>
+                                <li>Academic documents</li>
+                                <li>Essay on career goals</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn_outline btn-2 hover-outline-slide-down rounded-lg w-full" disabled>
+                            <span>Opens Soon</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Additional Info -->
+                <div class="mt-12 bg-IcyBreeze dark:bg-darklight rounded-22 p-8 text-center">
+                    <h3 class="text-24 font-bold mb-4">Need Help Finding Scholarships?</h3>
+                    <p class="text-SlateBlueText dark:text-opacity-80 mb-6 max-w-2xl mx-auto">
+                        Our scholarship advisors can help you identify the best funding opportunities based on your profile and academic goals.
+                    </p>
+                    <a href="/contact" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden inline-block">
+                        <span class="!px-8">Contact Advisor</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    {% include 'partials/footer.html' %}
+    
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-all duration-300 z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        document.getElementById('find-scholarships-btn').addEventListener('click', function() {
+            document.getElementById('scholarships-section').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

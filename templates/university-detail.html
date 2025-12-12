@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Profile & Tuition Fees - University Tuition Compare</title>
+    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="overflow-x-hidden dark:bg-darkmode">
+    {% include 'partials/header.html' %}
+    
+    <main class="pt-24">
+        <!-- University Header -->
+        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+            <div class="container">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <img src="https://via.placeholder.com/150x150?text=University+Logo" alt="University Logo" class="w-32 h-32 rounded-lg shadow-hero-box">
+                    <div class="flex-1">
+                        <h1 data-aos="fade-up" id="university-name">University Name</h1>
+                        <p class="text-lg text-SlateBlueText dark:text-opacity-80 mt-2" id="university-location">📍 Location</p>
+                        <div class="flex flex-wrap gap-4 mt-4">
+                            <span class="px-4 py-2 bg-primary text-white rounded-lg">🏆 Ranking: #0</span>
+                            <span class="px-4 py-2 bg-Aquamarine text-green-900 rounded-lg">✅ Acceptance: 0%</span>
+                            <button id="add-favorite" class="px-4 py-2 bg-white dark:bg-secondary text-primary border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
+                                ⭐ Add to Favorites
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- University Details -->
+        <section class="dark:bg-darkmode">
+            <div class="container">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Main Content -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Overview -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h2 class="text-28 mb-4">Overview</h2>
+                            <p class="text-SlateBlueText dark:text-opacity-80 leading-relaxed" id="university-overview">
+                                University overview will be displayed here...
+                            </p>
+                        </div>
+                        
+                        <!-- Admission Requirements -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h2 class="text-28 mb-4">Admission Requirements</h2>
+                            <div id="admission-requirements" class="space-y-4">
+                                <!-- Requirements will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Programs Offered -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h2 class="text-28 mb-4">Popular Programs</h2>
+                            <div id="programs-list" class="grid md:grid-cols-2 gap-4">
+                                <!-- Programs will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Tuition Costs -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4">💰 Tuition Costs</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Undergraduate (Home)</p>
+                                    <p class="text-lg font-bold text-primary">£9,250/year</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Undergraduate (International)</p>
+                                    <p class="text-lg font-bold text-primary">£18,000-35,000/year</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Postgraduate (International)</p>
+                                    <p class="text-lg font-bold text-primary">£19,000-40,000/year</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Tuition Deposit</p>
+                                    <p class="text-lg font-bold">£2,000-5,000</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Key Statistics -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4">📊 Key Statistics</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Total Students:</span>
+                                    <span class="font-bold">25,000</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">International Students:</span>
+                                    <span class="font-bold">35%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Staff-Student Ratio:</span>
+                                    <span class="font-bold">1:15</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Graduation Rate:</span>
+                                    <span class="font-bold">92%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Acceptance Rate:</span>
+                                    <span class="font-bold">65%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Living Costs -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4">🏠 Estimated Living Cost</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Accommodation:</span>
+                                    <span class="font-bold">£6,000-10,000/year</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Food:</span>
+                                    <span class="font-bold">£2,400-3,600/year</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Transport:</span>
+                                    <span class="font-bold">£600-1,200/year</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-SlateBlueText dark:text-opacity-80">Other Expenses:</span>
+                                    <span class="font-bold">£1,500-2,500/year</span>
+                                </div>
+                                <hr class="dark:border-gray-600">
+                                <div class="flex justify-between text-lg">
+                                    <span class="font-bold">Total:</span>
+                                    <span class="font-bold text-primary">£10,500-17,300/year</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Financial Aid -->
+                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
+                            <h3 class="text-20 font-bold mb-4">💳 Financial Aid</h3>
+                            <p class="text-SlateBlueText dark:text-opacity-80 mb-3">Scholarships Available: Yes</p>
+                            <a href="/scholarships" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden w-full block text-center">
+                                <span>View Scholarships</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    {% include 'partials/footer.html' %}
+    
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-all duration-300 z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/university-detail.js' %}"></script>
+</body>
+</html>
