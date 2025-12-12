@@ -15,23 +15,27 @@ const htmlElement = document.documentElement;
 const currentTheme = localStorage.getItem('theme') || 'light';
 htmlElement.classList.toggle('dark', currentTheme === 'dark');
 
-themeToggle.addEventListener('click', () => {
-    htmlElement.classList.toggle('dark');
-    const theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
-    localStorage.setItem('theme', theme);
-});
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        htmlElement.classList.toggle('dark');
+        const theme = htmlElement.classList.contains('dark') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+    });
+}
 
 // ======================================
 // Sticky Header
 // ======================================
 const header = document.getElementById('header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY >= 80) {
-        header.classList.add('shadow-lg', 'dark:shadow-darkmd', 'bg-white', 'dark:bg-secondary');
-    } else {
-        header.classList.remove('shadow-lg', 'dark:shadow-darkmd', 'bg-white', 'dark:bg-secondary');
-    }
-});
+if (header) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY >= 80) {
+            header.classList.add('shadow-lg');
+        } else {
+            header.classList.remove('shadow-lg');
+        }
+    });
+}
 
 // ======================================
 // Mobile Menu Toggle
@@ -42,20 +46,30 @@ const mobileMenuClose = document.getElementById('mobile-menu-close');
 const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
 function openMobileMenu() {
-    mobileMenu.classList.remove('translate-x-full');
-    mobileMenuOverlay.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+    if (mobileMenu && mobileMenuOverlay) {
+        mobileMenu.classList.remove('translate-x-full');
+        mobileMenuOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
 }
 
 function closeMobileMenu() {
-    mobileMenu.classList.add('translate-x-full');
-    mobileMenuOverlay.classList.add('hidden');
-    document.body.style.overflow = '';
+    if (mobileMenu && mobileMenuOverlay) {
+        mobileMenu.classList.add('translate-x-full');
+        mobileMenuOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
 }
 
-mobileMenuToggle.addEventListener('click', openMobileMenu);
-mobileMenuClose.addEventListener('click', closeMobileMenu);
-mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', openMobileMenu);
+}
+if (mobileMenuClose) {
+    mobileMenuClose.addEventListener('click', closeMobileMenu);
+}
+if (mobileMenuOverlay) {
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+}
 
 // ======================================
 // Mobile Compare Dropdown
@@ -86,23 +100,29 @@ const mobileSignInBtns = document.querySelectorAll('.mobile-sign-in');
 const mobileSignUpBtns = document.querySelectorAll('.mobile-sign-up');
 
 function openSignInModal() {
-    signinModal.classList.remove('hidden');
-    signupModal.classList.add('hidden');
-    document.body.style.overflow = 'hidden';
-    closeMobileMenu();
+    if (signinModal && signupModal) {
+        signinModal.classList.remove('hidden');
+        signupModal.classList.add('hidden');
+        document.body.style.overflow = 'hidden';
+        closeMobileMenu();
+    }
 }
 
 function openSignUpModal() {
-    signupModal.classList.remove('hidden');
-    signinModal.classList.add('hidden');
-    document.body.style.overflow = 'hidden';
-    closeMobileMenu();
+    if (signupModal && signinModal) {
+        signupModal.classList.remove('hidden');
+        signinModal.classList.add('hidden');
+        document.body.style.overflow = 'hidden';
+        closeMobileMenu();
+    }
 }
 
 function closeModals() {
-    signinModal.classList.add('hidden');
-    signupModal.classList.add('hidden');
-    document.body.style.overflow = '';
+    if (signinModal && signupModal) {
+        signinModal.classList.add('hidden');
+        signupModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
 }
 
 signInBtn?.addEventListener('click', (e) => {
@@ -181,20 +201,22 @@ signupForm?.addEventListener('submit', (e) => {
 // ======================================
 const scrollToTopBtn = document.getElementById('scroll-to-top');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        scrollToTopBtn.classList.remove('hidden');
-    } else {
-        scrollToTopBtn.classList.add('hidden');
-    }
-});
-
-scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (scrollToTopBtn) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollToTopBtn.classList.remove('hidden');
+        } else {
+            scrollToTopBtn.classList.add('hidden');
+        }
     });
-});
+
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 // ======================================
 // Initialize Slick Carousel (if needed)
