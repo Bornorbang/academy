@@ -496,30 +496,53 @@ function clearFilters() {
 
 // Favorites functionality
 function isUniversityFavorite(universityId) {
-    const favorites = JSON.parse(localStorage.getItem('favoriteUniversities') || '[]');
-    return favorites.includes(universityId);
+    const favorites = JSON.parse(localStorage.getItem('universityFavorites') || '[]');
+    return favorites.some(fav => fav.university_id === universityId);
 }
 
 function toggleFavorite(universityId) {
-    let favorites = JSON.parse(localStorage.getItem('favoriteUniversities') || '[]');
+    // Find the button to get university data
+    const btn = document.querySelector(`button[onclick="toggleFavorite('${universityId}')"]`);
+    if (!btn) return;
     
-    if (favorites.includes(universityId)) {
-        favorites = favorites.filter(id => id !== universityId);
+    const universityData = {
+        university_id: universityId,
+        name: btn.closest('.bg-white').querySelector('h3').textContent,
+        slug: btn.closest('.bg-white').querySelector('a[href*="/universities/"]').getAttribute('href').split('/')[2],
+        type: 'university'
+    };
+    
+    // Try to get more data from the card
+    const card = btn.closest('.bg-white');
+    const locationText = card.querySelector('.text-gray-600')?.textContent || '';
+    const parts = locationText.split(',');
+    universityData.city = parts[0]?.trim() || '';
+    universityData.country = parts[1]?.trim() || '';
+    
+    const banner = card.querySelector('img');
+    if (banner) {
+        universityData.banner = banner.src;
+    }
+    
+    let favorites = JSON.parse(localStorage.getItem('universityFavorites') || '[]');
+    const index = favorites.findIndex(fav => fav.university_id === universityId);
+    
+    if (index > -1) {
+        favorites.splice(index, 1);
         showToast('Removed from favorites', 'success');
     } else {
-        favorites.push(universityId);
+        favorites.push(universityData);
         showToast('Added to favorites', 'success');
     }
     
-    localStorage.setItem('favoriteUniversities', JSON.stringify(favorites));
+    localStorage.setItem('universityFavorites', JSON.stringify(favorites));
     
     // Update the button appearance
-    const btn = document.querySelector(`button[data-university-id="${universityId}"]`);
     if (btn) {
         const svg = btn.querySelector('svg');
-        const isFavorite = favorites.includes(universityId);
+        const isFav = index === -1; // Will be favorite after toggle
         
-        if (isFavorite) {
+        if (isFav) {
             svg.classList.add('text-red-500', 'fill-current');
             svg.classList.remove('text-gray-400');
             svg.setAttribute('fill', 'currentColor');

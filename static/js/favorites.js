@@ -1,68 +1,65 @@
-// Favorites Management
+// Favorites Page Management
 document.addEventListener('DOMContentLoaded', function() {
     const favoritesGrid = document.getElementById('favorites-grid');
     const emptyState = document.getElementById('empty-state');
     const favoritesCount = document.getElementById('favorites-count');
     const clearAllBtn = document.getElementById('clear-all-favorites');
-    const successToast = document.getElementById('success-toast');
-    const toastMessage = document.getElementById('toast-message');
     
-    // Get favorites from localStorage
-    function getFavorites() {
-        const favorites = localStorage.getItem('favorites');
-        return favorites ? JSON.parse(favorites) : [];
+    // Get all favorites
+    function getAllFavorites() {
+        const universities = JSON.parse(localStorage.getItem('universityFavorites') || '[]');
+        return { universities };
     }
     
-    // Save favorites to localStorage
-    function saveFavorites(favorites) {
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-    }
-    
-    // Show toast message
-    function showToast(message) {
-        toastMessage.textContent = message;
-        successToast.classList.remove('hidden');
-        setTimeout(() => {
-            successToast.classList.add('hidden');
-        }, 3000);
-    }
-    
-    // Create university card HTML
+    // Create university card
     function createUniversityCard(university) {
-        return `
-            <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box hover:shadow-hero-box transition-all duration-300" data-aos="fade-up">
-                <div class="mb-4">
-                    <img src="${university.logo || '/static/images/placeholder-university.jpg'}" 
-                         alt="${university.name}" 
-                         class="w-16 h-16 object-contain mb-4">
-                    <h3 class="text-22 font-bold mb-2">${university.name}</h3>
-                    <p class="text-SlateBlueText dark:text-opacity-80 mb-2">
-                        <span class="inline-block mr-2">📍</span>${university.city}, ${university.country}
-                    </p>
+        const imageUrl = university.banner || '/static/images/mine/about-us.jpg';
+        
+        const cardHTML = `
+            <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all p-6" data-type="university" data-id="${university.university_id}">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="${imageUrl}" alt="${university.name}" class="w-16 h-16 object-cover rounded-lg border border-gray-200 dark:border-gray-600 flex-shrink-0">
+                    <div class="flex-1 min-w-0">
+                        <a href="/universities/${university.slug}/" class="text-lg font-bold text-gray-900 dark:text-white hover:text-primary transition-colors block">${university.name}</a>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">${university.city}, ${university.country === 'IE' ? 'Ireland' : 'UK'}</p>
+                    </div>
                 </div>
-                
-                <div class="space-y-2 mb-4">
-                    <p class="text-sm">
-                        <span class="font-medium">Tuition (International):</span> 
-                        ${university.tuitionFrom || '£18,000'} - ${university.tuitionTo || '£35,000'}/year
-                    </p>
-                    <p class="text-sm">
-                        <span class="font-medium">Acceptance Rate:</span> 
-                        ${university.acceptanceRate || '65%'}
-                    </p>
-                    <p class="text-sm">
-                        <span class="font-medium">QS Ranking:</span> 
-                        ${university.ranking || 'N/A'}
-                    </p>
-                </div>
-                
-                <div class="flex gap-2">
-                    <a href="/university-detail/${university.id}" 
-                       class="flex-1 btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden inline-block text-center">
-                        <span class="!px-4">View Details</span>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/universities/${university.slug}/" class="px-6 py-2.5 text-white rounded-lg text-sm font-medium transition-all hover:opacity-90" style="background-color: #102C46;">
+                        View University
                     </a>
-                    <button class="remove-favorite bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors" 
-                            data-id="${university.id}">
+                    <button class="remove-favorite px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-medium transition-all" data-type="university" data-id="${university.university_id}">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        return cardHTML;
+    }
+    
+    // Create course card
+    function createCourseCard(course) {
+        return `
+            <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all" data-type="course" data-id="${course.course_id}">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">${course.course_title}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                            <span class="font-medium">${course.level === 'UG' ? 'Undergraduate' : 'Postgraduate'}</span>
+                        </p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">${course.location}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500">${course.university_name}</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="/universities/${course.university_slug}/courses/?level=${course.level}" class="px-6 py-2.5 text-white rounded-lg text-sm font-medium transition-all" style="background-color: #3B82F6;" onmouseover="this.style.backgroundColor='#2563eb'" onmouseout="this.style.backgroundColor='#3B82F6'">
+                        View Course
+                    </a>
+                    <a href="${course.university_website.startsWith('http') ? course.university_website : 'https://' + course.university_website}" target="_blank" class="px-6 py-2.5 text-white rounded-lg text-sm font-medium transition-all hover:opacity-90" style="background-color: #102C46;">
+                        Visit Website
+                    </a>
+                    <button class="remove-favorite px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-medium transition-all" data-type="course" data-id="${course.course_id}">
                         Remove
                     </button>
                 </div>
@@ -70,93 +67,88 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
     
-    // Render favorites
+    // Render all favorites
     function renderFavorites() {
-        const favorites = getFavorites();
+        const { universities } = getAllFavorites();
+        const totalCount = universities.length;
         
-        if (favorites.length === 0) {
+        console.log('=== RENDER FAVORITES DEBUG ===');
+        console.log('Total universities:', totalCount);
+        console.log('Universities data:', universities);
+        
+        if (totalCount === 0) {
             favoritesGrid.innerHTML = '';
+            favoritesGrid.style.display = 'none';
+            emptyState.style.display = 'block';
             emptyState.classList.remove('hidden');
-            favoritesCount.textContent = '0 universities saved';
-            clearAllBtn.style.display = 'none';
+            favoritesCount.textContent = '0 favorites';
+            if (clearAllBtn) clearAllBtn.style.display = 'none';
         } else {
+            emptyState.style.display = 'none';
             emptyState.classList.add('hidden');
-            clearAllBtn.style.display = 'block';
-            favoritesCount.textContent = `${favorites.length} ${favorites.length === 1 ? 'university' : 'universities'} saved`;
+            favoritesGrid.style.display = 'block';
+            if (clearAllBtn) clearAllBtn.style.display = 'block';
+            favoritesCount.textContent = `${totalCount} ${totalCount === 1 ? 'university' : 'universities'}`;
             
-            favoritesGrid.innerHTML = favorites.map(university => createUniversityCard(university)).join('');
+            console.log('Building HTML for', universities.length, 'universities');
+            const cardsHTML = universities.map(uni => {
+                console.log('Mapping university:', uni.name);
+                return createUniversityCard(uni);
+            }).join('');
+            
+            console.log('Cards HTML length:', cardsHTML.length);
+            console.log('Setting innerHTML...');
+            favoritesGrid.innerHTML = cardsHTML;
+            console.log('innerHTML set. favoritesGrid.children.length:', favoritesGrid.children.length);
             
             // Add event listeners to remove buttons
-            document.querySelectorAll('.remove-favorite').forEach(button => {
+            const removeButtons = document.querySelectorAll('.remove-favorite');
+            console.log('Found remove buttons:', removeButtons.length);
+            removeButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const universityId = this.getAttribute('data-id');
-                    removeFavorite(universityId);
+                    const type = this.dataset.type;
+                    const id = this.dataset.id;
+                    removeFavorite(type, id);
                 });
             });
         }
     }
     
     // Remove single favorite
-    function removeFavorite(universityId) {
-        let favorites = getFavorites();
-        const university = favorites.find(u => u.id === universityId);
-        favorites = favorites.filter(u => u.id !== universityId);
-        saveFavorites(favorites);
+    function removeFavorite(type, id) {
+        if (type === 'university') {
+            let favorites = JSON.parse(localStorage.getItem('universityFavorites') || '[]');
+            favorites = favorites.filter(fav => fav.university_id !== id);
+            localStorage.setItem('universityFavorites', JSON.stringify(favorites));
+        }
+        
         renderFavorites();
-        showToast(`${university.name} removed from favorites`);
+        showToast('Removed from favorites');
     }
     
     // Clear all favorites
-    clearAllBtn.addEventListener('click', function() {
-        if (confirm('Are you sure you want to remove all favorites?')) {
-            localStorage.removeItem('favorites');
-            renderFavorites();
-            showToast('All favorites cleared');
-        }
-    });
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to remove all favorites?')) {
+                localStorage.setItem('universityFavorites', '[]');
+                renderFavorites();
+                showToast('All favorites cleared');
+            }
+        });
+    }
+    
+    // Show toast
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
     
     // Initial render
     renderFavorites();
 });
-
-// Global function to add favorite (called from other pages)
-function addToFavorites(university) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    
-    // Check if already in favorites
-    if (favorites.some(u => u.id === university.id)) {
-        // Show already added message
-        const toast = document.getElementById('success-toast');
-        const message = document.getElementById('toast-message');
-        if (toast && message) {
-            message.textContent = 'University already in favorites';
-            toast.classList.remove('hidden');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 3000);
-        }
-        return false;
-    }
-    
-    favorites.push(university);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    
-    // Show success message
-    const toast = document.getElementById('success-toast');
-    const message = document.getElementById('toast-message');
-    if (toast && message) {
-        message.textContent = `${university.name} added to favorites`;
-        toast.classList.remove('hidden');
-        setTimeout(() => {
-            toast.classList.add('hidden');
-        }, 3000);
-    }
-    
-    return true;
-}
-
-// Global function to check if university is in favorites
-function isInFavorites(universityId) {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    return favorites.some(u => u.id === universityId);
-}

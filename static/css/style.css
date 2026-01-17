@@ -51,13 +51,16 @@ body {
     @apply relative inline-block text-17 font-medium top-0 left-0 w-full py-4 px-7 transition-all duration-0.4s;
   }
   .btn-1::before {
-    @apply bg-primary transition-all duration-0.4s;
+    @apply transition-all duration-0.4s;
+    background-color: #102C46;
   }
   .btn-1 span {
-    @apply text-white border border-solid border-primary rounded-lg transition-all duration-0.4s;
+    @apply text-white border border-solid rounded-lg transition-all duration-0.4s;
+    border-color: #102C46;
   }
   .btn-1 span:hover {
-    @apply text-primary transition-all duration-0.4s;
+    @apply transition-all duration-0.4s;
+    color: #102C46;
   }
   .btn.hover-filled-slide-down::before {
     @apply bottom-0 left-0 right-0 h-full w-full;
@@ -75,10 +78,13 @@ body {
     @apply relative inline-block text-17 font-medium top-0 left-0 w-full py-4 px-7 transition-all duration-0.4s;
   }
   .btn-2::before {
-    @apply bg-primary transition-all duration-0.4s rounded-lg;
+    @apply transition-all duration-0.4s rounded-lg;
+    background-color: #102C46;
   }
   .btn-2 span {
-    @apply text-primary border border-solid border-primary rounded-lg transition-all duration-0.4s;
+    @apply border border-solid rounded-lg transition-all duration-0.4s;
+    color: #102C46;
+    border-color: #102C46;
   }
   .btn-2 span:hover {
     @apply text-white transition-all duration-0.4s;

@@ -13,10 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const href = this.getAttribute('href');
+            // Only handle internal anchors, not # or external URLs
+            if (href && href.startsWith('#') && href.length > 1) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }
         });
     });
@@ -141,6 +145,16 @@ function displayUniversityBanner(university) {
     const browseTitleElement = document.getElementById('browse-courses-title');
     if (browseTitleElement) {
         browseTitleElement.textContent = `Browse UG and PG at ${university.name}`;
+    }
+    
+    // Update UG and PG course buttons
+    const ugCoursesBtn = document.getElementById('ug-courses-btn');
+    const pgCoursesBtn = document.getElementById('pg-courses-btn');
+    if (ugCoursesBtn) {
+        ugCoursesBtn.href = `/universities/${university.slug}/courses/?level=UG`;
+    }
+    if (pgCoursesBtn) {
+        pgCoursesBtn.href = `/universities/${university.slug}/courses/?level=PG`;
     }
     
     // Update tuition fees text

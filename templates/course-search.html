@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Universities in UK & Ireland - University Tuition Compare</title>
+    <title>Course Search Results - University Tuition Compare</title>
     <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
     <link href="{% static 'css/output.css' %}" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -17,9 +17,9 @@
         <!-- Hero Section -->
         <section class="bg-IcyBreeze dark:bg-darklight py-12">
             <div class="container">
-                <h1 class="text-center" data-aos="fade-up">Explore Universities</h1>
+                <h1 class="text-center" data-aos="fade-up">Course Search Results</h1>
                 <p class="text-center text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Browse through all UK and Irish universities and find your perfect match
+                    Universities offering courses matching your search
                 </p>
             </div>
         </section>
@@ -32,14 +32,14 @@
                     <!-- Left Column: Filters (30%) - Hidden on mobile/tablet -->
                     <aside class="hidden lg:block w-[30%] sticky top-24" style="max-height: calc(100vh - 6rem); overflow-y: auto;">
                         <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
-                            <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Universities</h2>
+                            <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Results</h2>
                             
                             <!-- Search Bar -->
                             <div class="mb-6">
-                                <label for="filter-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                    Search by Name
+                                <label for="filter-subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Course/Subject
                                 </label>
-                                <input type="text" id="filter-name" placeholder="Search universities..." 
+                                <input type="text" id="filter-subject" placeholder="Search courses..." 
                                        class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
                             </div>
                             
@@ -86,14 +86,14 @@
                         <!-- Mobile Filter Section (Hidden on desktop) -->
                         <div class="lg:hidden mb-6">
                             <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
-                                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Universities</h2>
+                                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Results</h2>
                                 
                                 <!-- Search Bar -->
                                 <div class="mb-6">
-                                    <label for="filter-name-mobile" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Search by Name
+                                    <label for="filter-subject-mobile" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Course/Subject
                                     </label>
-                                    <input type="text" id="filter-name-mobile" placeholder="Search universities..." 
+                                    <input type="text" id="filter-subject-mobile" placeholder="Search courses..." 
                                            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                                 
@@ -136,7 +136,8 @@
                         
                         <!-- Results Count -->
                         <div class="mb-6">
-                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white" id="university-count">0 Universities</h2>
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white" id="university-count">Loading...</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="search-info"></p>
                         </div>
                         
                         <!-- University Cards -->
@@ -175,6 +176,6 @@
     
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/university-search.js' %}"></script>
+    <script src="{% static 'js/course-search.js' %}"></script>
 </body>
 </html>

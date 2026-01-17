@@ -27,98 +27,64 @@
         </section>
         
         <!-- Form Section -->
-        <section class="bg-white dark:bg-darkmode py-12">
+        <section class="bg-white dark:bg-darkmode py-16">
             <div class="container">
                 <!-- Search Form -->
-                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 shadow-lg p-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-gradient-to-br from-white/80 to-white/40 dark:from-secondary/80 dark:to-secondary/40 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-22 shadow-2xl p-12 md:p-16 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Start Your Search</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Fill in the details below to find courses that match your goals</p>
+                    </div>
+                    
                     <form id="course-search-form" class="space-y-6">
-                        <!-- Level of Study -->
-                        <div>
-                            <label for="level-of-study" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
-                                Level of Study <span class="text-red-500">*</span>
-                            </label>
-                            <select id="level-of-study" name="level" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option value="">Select Level of Study</option>
-                                <option value="undergraduate">Undergraduate Courses</option>
-                                <option value="postgraduate">Postgraduate Courses</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Destination Country -->
-                        <div>
-                            <label for="destination-country" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
-                                Destination Country <span class="text-red-500">*</span>
-                            </label>
-                            <select id="destination-country" name="country" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option value="">Select Destination Country</option>
-                                <option value="uk">UK</option>
-                                <option value="ireland">Ireland</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Study Start Year -->
-                        <div>
-                            <label for="start-year" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
-                                Study Start Year <span class="text-red-500">*</span>
-                            </label>
-                            <select id="start-year" name="year" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option value="">Select Start Year</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                            </select>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Level of Study -->
+                            <div>
+                                <label for="level-of-study" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Level of Study <span class="text-red-500">*</span>
+                                </label>
+                                <select id="level-of-study" name="level" required class="w-full px-4 py-3.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                                    <option value="">Select Level</option>
+                                    <option value="UG">Undergraduate</option>
+                                    <option value="PG">Postgraduate</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Destination Country -->
+                            <div>
+                                <label for="destination-country" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Country <span class="text-red-500">*</span>
+                                </label>
+                                <select id="destination-country" name="country" required class="w-full px-4 py-3.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                                    <option value="">Select Country</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="IE">Ireland</option>
+                                </select>
+                            </div>
                         </div>
                         
                         <!-- Subject/Course Search -->
                         <div>
-                            <label for="course-subject" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
-                                Subject or Course <span class="text-red-500">*</span>
+                            <label for="course-subject" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                Subject or Course Name <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="course-subject" name="subject" required 
-                                   placeholder="Start typing your subject (e.g., Business, Computer Science, Medicine...)"
-                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
-                                   list="subjects-list">
-                            <datalist id="subjects-list">
-                                <option value="Business Management">
-                                <option value="Computer Science">
-                                <option value="Medicine">
-                                <option value="Engineering">
-                                <option value="Law">
-                                <option value="Psychology">
-                                <option value="Accounting & Finance">
-                                <option value="Marketing">
-                                <option value="Data Science">
-                                <option value="Artificial Intelligence">
-                                <option value="Architecture">
-                                <option value="Economics">
-                                <option value="International Relations">
-                                <option value="Nursing">
-                                <option value="Education">
-                            </datalist>
+                            <div class="relative">
+                                <input type="text" id="course-subject" name="subject" required 
+                                       placeholder="e.g., Computer Science, Business Management, Medicine..."
+                                       class="w-full px-4 py-3.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                                <svg class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
                         </div>
                         
                         <!-- Search Button -->
-                        <div class="flex justify-center pt-4">
-                            <button type="submit" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden">
-                                <span class="!px-12">Search Courses</span>
+                        <div class="flex justify-center pt-6">
+                            <button type="submit" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                                <span class="!px-16 !py-4 text-base">Search Courses</span>
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Results Section -->
-        <section id="results-section" class="hidden bg-white dark:bg-darkmode">
-            <div class="container">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-32">Search Results</h2>
-                    <p class="text-SlateBlueText dark:text-opacity-80" id="results-count">0 courses found</p>
-                </div>
-                
-                <!-- Results Grid -->
-                <div id="results-grid" class="space-y-6">
-                    <!-- Course cards will be inserted here by JavaScript -->
                 </div>
             </div>
         </section>

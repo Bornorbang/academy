@@ -23,8 +23,10 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('', views.home, name='home'),
     path('find-course/', TemplateView.as_view(template_name='find-course.html'), name='find-course'),
+    path('course-search/', views.course_search_page, name='course-search'),
+    path('api/course-search/', views.search_courses_api, name='api-course-search'),
     path('courses/degrees/undergraduate/<str:course>/', TemplateView.as_view(template_name='course-results.html'), name='undergraduate-courses'),
     path('courses/degrees/postgraduate/<str:course>/', TemplateView.as_view(template_name='course-results.html'), name='postgraduate-courses'),
     path('compare-tuition/', TemplateView.as_view(template_name='compare-tuition.html'), name='compare-tuition'),
@@ -32,7 +34,9 @@ urlpatterns = [
     path('university-search/', views.university_search, name='university-search'),
     path('api/universities/', views.get_universities, name='get-universities'),
     path('api/scholarships/', views.get_scholarships, name='get-scholarships'),
+    path('api/courses/', views.get_courses, name='get-courses'),
     path('universities/<slug:slug>/', TemplateView.as_view(template_name='university-detail.html'), name='university-detail'),
+    path('universities/<slug:slug>/courses/', views.university_courses, name='university-courses'),
     path('scholarships/', TemplateView.as_view(template_name='scholarships.html'), name='scholarships'),
     path('favorites/', TemplateView.as_view(template_name='favorites.html'), name='favorites'),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
