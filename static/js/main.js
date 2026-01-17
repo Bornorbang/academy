@@ -221,26 +221,27 @@ if (scrollToTopBtn) {
 // ======================================
 // Initialize Slick Carousel (if needed)
 // ======================================
-$(document).ready(function() {
-    // Conferences Carousel
-    $('#conferences-carousel').slick({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        arrows: true,
-        responsive: [
-            {
-                breakpoint: 768,
-                settings: {
-                    arrows: false
-                }
-            }
-        ]
-    });
-    
-    // Add more carousel initializations as needed
-});
+// Commented out - jQuery not loaded
+// $(document).ready(function() {
+//     // Conferences Carousel
+//     $('#conferences-carousel').slick({
+//         dots: true,
+//         infinite: true,
+//         speed: 500,
+//         slidesToShow: 1,
+//         slidesToScroll: 1,
+//         autoplay: true,
+//         autoplaySpeed: 3000,
+//         arrows: true,
+//         responsive: [
+//             {
+//                 breakpoint: 768,
+//                 settings: {
+//                     arrows: false
+//                 }
+//             }
+//         ]
+//     });
+//     
+//     // Add more carousel initializations as needed
+// });

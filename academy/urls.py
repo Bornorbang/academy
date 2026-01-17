@@ -19,6 +19,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,13 +29,16 @@ urlpatterns = [
     path('courses/degrees/postgraduate/<str:course>/', TemplateView.as_view(template_name='course-results.html'), name='postgraduate-courses'),
     path('compare-tuition/', TemplateView.as_view(template_name='compare-tuition.html'), name='compare-tuition'),
     path('compare-rankings/', TemplateView.as_view(template_name='compare-rankings.html'), name='compare-rankings'),
-    path('university-search/', TemplateView.as_view(template_name='university-search.html'), name='university-search'),
-    path('university-detail/<str:university_id>/', TemplateView.as_view(template_name='university-detail.html'), name='university-detail'),
+    path('university-search/', views.university_search, name='university-search'),
+    path('api/universities/', views.get_universities, name='get-universities'),
+    path('api/scholarships/', views.get_scholarships, name='get-scholarships'),
+    path('universities/<slug:slug>/', TemplateView.as_view(template_name='university-detail.html'), name='university-detail'),
     path('scholarships/', TemplateView.as_view(template_name='scholarships.html'), name='scholarships'),
     path('favorites/', TemplateView.as_view(template_name='favorites.html'), name='favorites'),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
     path('privacy/', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
     path('terms/', TemplateView.as_view(template_name='terms.html'), name='terms'),
+    path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
 ]
 
 if settings.DEBUG:

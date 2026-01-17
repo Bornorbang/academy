@@ -24,41 +24,142 @@
             </div>
         </section>
         
-        <!-- Filter & Search Section -->
+        <!-- Filter & University List Section -->
         <section class="dark:bg-darkmode py-8">
             <div class="container">
-                <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 mb-8">
-                    <div class="grid md:grid-cols-4 gap-4">
-                        <!-- University Name -->
-                        <input type="text" id="filter-name" placeholder="Search by university name..." 
-                               class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary">
+                <div class="flex gap-12">
+                    
+                    <!-- Left Column: Filters (30%) - Hidden on mobile/tablet -->
+                    <aside class="hidden lg:block w-[30%] lg:sticky lg:top-24 h-fit">
+                        <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
+                            <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Universities</h2>
+                            
+                            <!-- Search Bar -->
+                            <div class="mb-6">
+                                <label for="filter-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Search by Name
+                                </label>
+                                <input type="text" id="filter-name" placeholder="Search universities..." 
+                                       class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                            </div>
+                            
+                            <!-- Study Level Filter -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                    Study Level
+                                </label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button data-level="UG" class="level-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                        Undergraduate
+                                    </button>
+                                    <button data-level="PG" class="level-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                        Postgraduate
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Location Filter -->
+                            <div class="mb-6">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                    Location
+                                </label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button data-country="UK" class="country-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                        UK
+                                    </button>
+                                    <button data-country="IE" class="country-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                        Ireland
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Clear Filters Button -->
+                            <button id="clear-filters" class="w-full btn_outline btn-2 hover-outline-slide-down">
+                                <span class="!py-2">Clear All Filters</span>
+                            </button>
+                        </div>
+                    </aside>
+                    
+                    <!-- Right Column: University List (70% desktop, 100% mobile) -->
+                    <div class="w-full lg:w-[70%] lg:border-l lg:border-gray-300 lg:dark:border-gray-600 lg:pl-12">
                         
-                        <!-- Country Filter -->
-                        <select id="filter-country" class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary">
-                            <option value="">Filter by Country</option>
-                            <option value="uk">UK</option>
-                            <option value="ireland">Ireland</option>
-                        </select>
+                        <!-- Mobile Filter Section (Hidden on desktop) -->
+                        <div class="lg:hidden mb-6">
+                            <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
+                                <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Universities</h2>
+                                
+                                <!-- Search Bar -->
+                                <div class="mb-6">
+                                    <label for="filter-name-mobile" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        Search by Name
+                                    </label>
+                                    <input type="text" id="filter-name-mobile" placeholder="Search universities..." 
+                                           class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                </div>
+                                
+                                <!-- Study Level Filter -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                        Study Level
+                                    </label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <button data-level="UG" class="level-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                            Undergraduate
+                                        </button>
+                                        <button data-level="PG" class="level-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                            Postgraduate
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Location Filter -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                        Location
+                                    </label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <button data-country="UK" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                            UK
+                                        </button>
+                                        <button data-country="IE" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                            Ireland
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Clear Filters Button -->
+                                <button id="clear-filters-mobile" class="w-full btn_outline btn-2 hover-outline-slide-down">
+                                    <span class="!py-2">Clear All Filters</span>
+                                </button>
+                            </div>
+                        </div>
                         
-                        <!-- City Filter -->
-                        <input type="text" id="filter-city" placeholder="Filter by city..." 
-                               class="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary">
+                        <!-- Results Count -->
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold text-gray-900 dark:text-white" id="university-count">0 Universities</h2>
+                        </div>
                         
-                        <!-- Clear Filters -->
-                        <button id="clear-filters" class="btn_outline btn-2 hover-outline-slide-down">
-                            <span class="!py-2">Clear Filters</span>
-                        </button>
+                        <!-- University Cards -->
+                        <div id="universities-grid" class="space-y-6">
+                            <!-- University cards will be inserted here by JavaScript -->
+                        </div>
+                        
+                        <!-- Load More Button -->
+                        <div id="load-more-container" class="mt-8 text-center hidden">
+                            <button id="load-more-btn" 
+                                    class="w-[70%] px-12 py-4 bg-transparent text-lg rounded-lg font-semibold transition-all duration-200 inline-flex items-center justify-center gap-3 border-2"
+                                    style="border-color: #102C46; color: #102C46;"
+                                    onmouseover="this.style.backgroundColor='#102C46'; this.style.color='white';"
+                                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='#102C46';">
+                                <span id="load-more-text">Load More</span>
+                                <svg id="load-more-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Results Count -->
-                <div class="mb-6">
-                    <p class="text-SlateBlueText dark:text-opacity-80" id="university-count">Showing 0 universities</p>
-                </div>
-                
-                <!-- University Grid -->
-                <div id="universities-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- University cards will be inserted here by JavaScript -->
+                    
                 </div>
             </div>
         </section>

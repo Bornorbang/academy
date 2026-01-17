@@ -14,144 +14,201 @@
     {% include 'partials/header.html' %}
     
     <main class="pt-24">
-        <!-- University Header -->
-        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+        <!-- University Banner -->
+        <section class="relative h-[300px] lg:h-[400px]">
+            <!-- Banner Image with Opacity Overlay -->
+            <div id="university-banner" class="absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://www.collegetransitions.com/wp-content/uploads/2024/05/largest-high-schools.jpg');"></div>
+            
+            <!-- Banner Content -->
+            <div class="relative h-full container flex flex-col justify-center items-center text-center text-white">
+                <h1 class="text-4xl lg:text-5xl font-bold mb-4 text-white" data-aos="fade-up" id="university-name">University Name</h1>
+                <p class="text-xl lg:text-2xl mb-8" data-aos="fade-up" data-aos-delay="100" id="university-location">📍 Location</p>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#" id="visit-website-btn" target="_blank" rel="noopener noreferrer"
+                       class="px-8 py-4 text-white rounded-lg font-semibold transition-all text-base hover:opacity-90"
+                       style="background-color: #102C46;">
+                        Visit Website
+                    </a>
+                    <a href="#more-details"
+                       class="px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold transition-all text-base hover:bg-gray-100">
+                        More Details
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- University Information Section -->
+        <section class="dark:bg-darkmode py-12">
             <div class="container">
-                <div class="flex flex-col md:flex-row items-start gap-8">
-                    <img src="https://via.placeholder.com/150x150?text=University+Logo" alt="University Logo" class="w-32 h-32 rounded-lg shadow-hero-box">
-                    <div class="flex-1">
-                        <h1 data-aos="fade-up" id="university-name">University Name</h1>
-                        <p class="text-lg text-SlateBlueText dark:text-opacity-80 mt-2" id="university-location">📍 Location</p>
-                        <div class="flex flex-wrap gap-4 mt-4">
-                            <span class="px-4 py-2 bg-primary text-white rounded-lg">🏆 Ranking: #0</span>
-                            <span class="px-4 py-2 bg-Aquamarine text-green-900 rounded-lg">✅ Acceptance: 0%</span>
-                            <button id="add-favorite" class="px-4 py-2 bg-white dark:bg-secondary text-primary border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition-all">
-                                ⭐ Add to Favorites
-                            </button>
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">University Information</h2>
+                
+                <!-- University Overview -->
+                <div id="university-overview" class="mb-8 text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <!-- Overview will be loaded here by JavaScript -->
+                </div>
+                
+                <!-- Stats Cards -->
+                <div id="university-info-cards">
+                    <!-- Stats cards will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Browse Courses Banner -->
+        <section class="py-16" style="background-color: #102C46;">
+            <div class="container text-center">
+                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-8" id="browse-courses-title">
+                    Browse UG and PG at [University Name]
+                </h2>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="#" id="ug-courses-btn"
+                       class="px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold transition-all text-base hover:bg-gray-100">
+                        Undergraduate Courses
+                    </a>
+                    <a href="#" id="pg-courses-btn"
+                       class="px-8 py-4 bg-white text-gray-900 rounded-lg font-semibold transition-all text-base hover:bg-gray-100">
+                        Postgraduate Courses
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tuition Fees and Scholarships Section -->
+        <section class="dark:bg-darkmode py-12">
+            <div class="container">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Tuition Fees and Scholarships</h2>
+                
+                <!-- Tabs -->
+                <div class="flex gap-4 mb-8 border-b border-gray-200 dark:border-gray-700">
+                    <button id="tuition-tab" class="px-6 py-3 font-semibold border-b-4 transition-colors" style="border-color: #102C46; color: #102C46; margin-bottom: -1px;">
+                        Tuition Fees
+                    </button>
+                    <button id="scholarships-tab" class="px-6 py-3 font-semibold border-b-4 border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" style="margin-bottom: -1px;">
+                        Scholarships
+                    </button>
+                </div>
+                
+                <!-- Tuition Fees Content -->
+                <div id="tuition-content" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <!-- Image -->
+                        <div class="rounded-lg overflow-hidden order-1">
+                            <img id="tuition-image" src="" alt="Tuition Fees" class="w-full h-auto">
+                        </div>
+                        <!-- Text Content -->
+                        <div class="order-2">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Tuition Fees</h3>
+                            <p class="text-gray-700 dark:text-gray-300 mb-3 leading-relaxed" id="tuition-text">
+                                Tuition fees for students may vary depending on your level, programme, home status and course.
+                            </p>
+                            <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                                For more information, click Visit Website.
+                            </p>
+                            <a href="#" id="tuition-website-btn" target="_blank" rel="noopener noreferrer"
+                               class="inline-block px-8 py-3 text-white rounded-lg font-semibold transition-all text-base hover:opacity-90"
+                               style="background-color: #102C46;">
+                                Visit Website
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scholarships Content -->
+                <div id="scholarships-content" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <!-- Image -->
+                        <div class="rounded-lg overflow-hidden order-1">
+                            <img id="scholarship-image" src="" alt="Scholarships" class="w-full h-auto">
+                        </div>
+                        <!-- Text Content -->
+                        <div class="order-2">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Scholarships</h3>
+                            <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 mb-6 leading-relaxed space-y-2" id="scholarships-list">
+                                <!-- Scholarships will be loaded here by JavaScript -->
+                                <li>Loading scholarships...</li>
+                            </ul>
+                            <a href="#" id="scholarship-website-btn" target="_blank" rel="noopener noreferrer"
+                               class="inline-block px-8 py-3 text-white rounded-lg font-semibold transition-all text-base hover:opacity-90"
+                               style="background-color: #102C46;">
+                                Visit Website
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- University Details -->
-        <section class="dark:bg-darkmode">
+        <!-- Living Costs & Expenses Section -->
+        <section class="bg-gray-50 dark:bg-gray-900 py-12">
             <div class="container">
-                <div class="grid lg:grid-cols-3 gap-8">
-                    <!-- Main Content -->
-                    <div class="lg:col-span-2 space-y-8">
-                        <!-- Overview -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h2 class="text-28 mb-4">Overview</h2>
-                            <p class="text-SlateBlueText dark:text-opacity-80 leading-relaxed" id="university-overview">
-                                University overview will be displayed here...
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Living Costs & Expenses</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Image -->
+                    <div class="rounded-lg overflow-hidden order-1">
+                        <img id="living-cost-image" src="" alt="Living Costs" class="w-full h-auto">
+                    </div>
+                    <!-- Text Content -->
+                    <div class="order-2">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Estimated Annual Living Costs</h3>
+                        <div class="mb-6">
+                            <p class="text-2xl font-bold mb-2" style="color: #102C46;" id="living-cost-amount">
+                                <!-- Will be loaded by JavaScript -->
+                            </p>
+                            <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                                This estimate includes accommodation, food, transportation, books, and personal expenses for a full academic year. Actual costs may vary based on lifestyle and accommodation choices.
                             </p>
                         </div>
-                        
-                        <!-- Admission Requirements -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h2 class="text-28 mb-4">Admission Requirements</h2>
-                            <div id="admission-requirements" class="space-y-4">
-                                <!-- Requirements will be inserted here -->
-                            </div>
-                        </div>
-                        
-                        <!-- Programs Offered -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h2 class="text-28 mb-4">Popular Programs</h2>
-                            <div id="programs-list" class="grid md:grid-cols-2 gap-4">
-                                <!-- Programs will be inserted here -->
-                            </div>
+                        <div class="bg-blue-50 dark:bg-gray-800 p-4 rounded-lg">
+                            <p class="text-sm text-gray-700 dark:text-gray-300">
+                                <strong>💡 Tip:</strong> Consider on-campus accommodation and student discounts to reduce living expenses.
+                            </p>
                         </div>
                     </div>
-                    
-                    <!-- Sidebar -->
-                    <div class="space-y-6">
-                        <!-- Tuition Costs -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h3 class="text-20 font-bold mb-4">💰 Tuition Costs</h3>
-                            <div class="space-y-3">
-                                <div>
-                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Undergraduate (Home)</p>
-                                    <p class="text-lg font-bold text-primary">£9,250/year</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Undergraduate (International)</p>
-                                    <p class="text-lg font-bold text-primary">£18,000-35,000/year</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Postgraduate (International)</p>
-                                    <p class="text-lg font-bold text-primary">£19,000-40,000/year</p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">Tuition Deposit</p>
-                                    <p class="text-lg font-bold">£2,000-5,000</p>
-                                </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Admissions & Requirements Section -->
+        <section class="dark:bg-darkmode py-12">
+            <div class="container">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Admissions & Requirements</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Image -->
+                    <div class="rounded-lg overflow-hidden order-1">
+                        <img id="admissions-image" src="" alt="Admissions" class="w-full h-auto">
+                    </div>
+                    <!-- Text Content -->
+                    <div class="order-2">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Entry Requirements</h3>
+                        <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed" id="admission-requirements">
+                            <!-- Will be loaded by JavaScript -->
+                        </p>
+                        
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-white dark:bg-dark_card rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Acceptance Rate</p>
+                                <p class="text-2xl font-bold" style="color: #102C46;" id="admission-acceptance-rate">--</p>
+                            </div>
+                            <div class="bg-white dark:bg-dark_card rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Graduation Rate</p>
+                                <p class="text-2xl font-bold" style="color: #102C46;" id="graduation-rate">--</p>
                             </div>
                         </div>
                         
-                        <!-- Key Statistics -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h3 class="text-20 font-bold mb-4">📊 Key Statistics</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Total Students:</span>
-                                    <span class="font-bold">25,000</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">International Students:</span>
-                                    <span class="font-bold">35%</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Staff-Student Ratio:</span>
-                                    <span class="font-bold">1:15</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Graduation Rate:</span>
-                                    <span class="font-bold">92%</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Acceptance Rate:</span>
-                                    <span class="font-bold">65%</span>
-                                </div>
+                        <!-- Global Ranking Badge -->
+                        <div class="flex items-center gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 p-4 rounded-lg" id="ranking-badge">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: #102C46;">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
                             </div>
-                        </div>
-                        
-                        <!-- Living Costs -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h3 class="text-20 font-bold mb-4">🏠 Estimated Living Cost</h3>
-                            <div class="space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Accommodation:</span>
-                                    <span class="font-bold">£6,000-10,000/year</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Food:</span>
-                                    <span class="font-bold">£2,400-3,600/year</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Transport:</span>
-                                    <span class="font-bold">£600-1,200/year</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-SlateBlueText dark:text-opacity-80">Other Expenses:</span>
-                                    <span class="font-bold">£1,500-2,500/year</span>
-                                </div>
-                                <hr class="dark:border-gray-600">
-                                <div class="flex justify-between text-lg">
-                                    <span class="font-bold">Total:</span>
-                                    <span class="font-bold text-primary">£10,500-17,300/year</span>
-                                </div>
+                            <div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Global Ranking</p>
+                                <p class="text-xl font-bold text-gray-900 dark:text-white" id="global-ranking">--</p>
                             </div>
-                        </div>
-                        
-                        <!-- Financial Aid -->
-                        <div class="bg-white dark:bg-secondary rounded-22 p-6 shadow-round-box">
-                            <h3 class="text-20 font-bold mb-4">💳 Financial Aid</h3>
-                            <p class="text-SlateBlueText dark:text-opacity-80 mb-3">Scholarships Available: Yes</p>
-                            <a href="/scholarships" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden w-full block text-center">
-                                <span>View Scholarships</span>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -171,4 +228,5 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/university-detail.js' %}"></script>
 </body>
+</html>
 </html>

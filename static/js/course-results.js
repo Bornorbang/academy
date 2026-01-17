@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update page title and breadcrumb
     updatePageHeader(level, subject);
     
-    // Generate 10 sample courses based on search parameters
-    const sampleCourses = generateCourses(subject, level, country, 10);
+    // TODO: Replace with API call to fetch real courses
+    const sampleCourses = [];
     
-    // Render courses
+    // Render courses (will show "no results" message until API is implemented)
     renderCourses(sampleCourses);
     
     // Filter functionality
@@ -53,24 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function generateCourses(subject, level, country, count) {
-        const universities = country === 'ireland' ? [
-            { name: 'Trinity College Dublin', location: 'Dublin, Ireland' },
-            { name: 'University College Dublin', location: 'Dublin, Ireland' },
-            { name: 'University College Cork', location: 'Cork, Ireland' },
-            { name: 'National University of Ireland Galway', location: 'Galway, Ireland' },
-            { name: 'Dublin City University', location: 'Dublin, Ireland' }
-        ] : [
-            { name: 'University of Oxford', location: 'Oxford, UK' },
-            { name: 'University of Cambridge', location: 'Cambridge, UK' },
-            { name: 'Imperial College London', location: 'London, UK' },
-            { name: 'London School of Economics', location: 'London, UK' },
-            { name: 'University of Edinburgh', location: 'Edinburgh, UK' },
-            { name: 'University of Manchester', location: 'Manchester, UK' },
-            { name: 'King\'s College London', location: 'London, UK' },
-            { name: 'University of Bristol', location: 'Bristol, UK' },
-            { name: 'University of Warwick', location: 'Warwick, UK' },
-            { name: 'University of Glasgow', location: 'Glasgow, UK' }
-        ];
+        // TODO: Replace with API call to fetch real courses from database
+        // Example: fetch(`/api/courses/?subject=${subject}&level=${level}&country=${country}`)
+        const universities = [];
         
         const coursePrefix = level === 'postgraduate' ? ['MSc', 'MA', 'MRes', 'MBA'] : ['BSc', 'BA', 'BEng', 'LLB'];
         const durations = level === 'postgraduate' ? ['1 Year', '2 Years'] : ['3 Years', '4 Years'];
@@ -80,27 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
             ['£15,000', '£18,500', '£20,000', '£22,500', '£25,000'];
         const scholarships = ['Up to £3,000', 'Up to £5,000', 'Up to £7,500', 'Up to £10,000', 'Not Available'];
         
-        const courses = [];
-        for (let i = 0; i < count; i++) {
-            const uni = universities[i % universities.length];
-            const prefix = coursePrefix[i % coursePrefix.length];
-            courses.push({
-                id: i + 1,
-                name: `${prefix} ${subject || 'General Studies'}`,
-                university: uni.name,
-                location: uni.location,
-                overview: `Comprehensive ${level} program in ${subject || 'General Studies'} offering in-depth knowledge, practical skills, and industry connections.`,
-                duration: durations[i % durations.length],
-                intake: intakes[i % intakes.length],
-                tuition: tuitionRanges[i % tuitionRanges.length],
-                scholarship: scholarships[i % scholarships.length],
-                requirements: level === 'postgraduate' ? 
-                    'Bachelor\'s degree (2:1) in related field | IELTS: 6.5 overall' :
-                    'A-levels: ABB or equivalent | IELTS: 6.0 overall',
-                country: country
-            });
-        }
-        return courses;
+        // TODO: Return empty array until API is implemented
+        return [];
     }
     
     // Filter functionality
