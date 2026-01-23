@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!grid) return;
         
         grid.innerHTML = courses.map(course => `
-            <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box overflow-hidden hover:shadow-xl transition-shadow" data-aos="fade-up">
+            <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow" data-aos="fade-up">
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
                         <div class="flex-1">

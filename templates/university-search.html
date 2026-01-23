@@ -15,12 +15,19 @@
     
     <main class="pt-24">
         <!-- Hero Section -->
-        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+        <section style="background-color: #102C46;" class="relative overflow-hidden py-12 md:py-16">
             <div class="container">
-                <h1 class="text-center" data-aos="fade-up">Explore Universities</h1>
-                <p class="text-center text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Browse through all UK and Irish universities and find your perfect match
-                </p>
+                <div class="max-w-3xl">
+                    <p class="relative z-0 inline-block text-primary text-lg font-bold before:absolute before:content-[''] before:bg-primary/20 before:w-full before:h-2 before:-z-1 before:bottom-0" data-aos="fade-up" data-aos-delay="100">
+                        Explore Universities
+                    </p>
+                    <h1 class="py-4 text-3xl md:text-4xl font-bold text-white" data-aos="fade-up" data-aos-delay="200">
+                        Explore Universities
+                    </h1>
+                    <p class="text-lg text-white text-opacity-80 font-normal" data-aos="fade-up" data-aos-delay="300">
+                        Browse through all UK and Irish universities and find your perfect match
+                    </p>
+                </div>
             </div>
         </section>
         
@@ -31,7 +38,7 @@
                     
                     <!-- Left Column: Filters (30%) - Hidden on mobile/tablet -->
                     <aside class="hidden lg:block w-[30%] sticky top-24" style="max-height: calc(100vh - 6rem); overflow-y: auto;">
-                        <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
+                        <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg p-6">
                             <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Universities</h2>
                             
                             <!-- Search Bar -->
@@ -49,7 +56,7 @@
                                     Study Level
                                 </label>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <button data-level="UG" class="level-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                    <button data-level="UG" class="level-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active">
                                         Undergraduate
                                     </button>
                                     <button data-level="PG" class="level-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
@@ -64,10 +71,10 @@
                                     Location
                                 </label>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <button data-country="UK" class="country-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                    <button data-country="UK" class="country-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active">
                                         UK
                                     </button>
-                                    <button data-country="IE" class="country-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                    <button data-country="IE" class="country-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
                                         Ireland
                                     </button>
                                 </div>
@@ -85,7 +92,7 @@
                         
                         <!-- Mobile Filter Section (Hidden on desktop) -->
                         <div class="lg:hidden mb-6">
-                            <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
+                            <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg p-6">
                                 <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Universities</h2>
                                 
                                 <!-- Search Bar -->
@@ -103,7 +110,7 @@
                                         Study Level
                                     </label>
                                     <div class="grid grid-cols-2 gap-3">
-                                        <button data-level="UG" class="level-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                        <button data-level="UG" class="level-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active">
                                             Undergraduate
                                         </button>
                                         <button data-level="PG" class="level-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
@@ -118,10 +125,10 @@
                                         Location
                                     </label>
                                     <div class="grid grid-cols-2 gap-3">
-                                        <button data-country="UK" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                        <button data-country="UK" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active">
                                             UK
                                         </button>
-                                        <button data-country="IE" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                        <button data-country="IE" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
                                             Ireland
                                         </button>
                                     </div>

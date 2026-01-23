@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import University, Course, Scholarship
+from .models import University, Course, Scholarship, Subject
 from django.db.models import Q, Count
 import random
 from difflib import SequenceMatcher
@@ -54,6 +54,20 @@ def get_universities(request):
         is_detail_page = slug and slug == uni.slug
         overview_text = uni.overview if is_detail_page else (uni.overview[:150] + '...' if len(uni.overview) > 150 else uni.overview)
         
+        # Count UG courses for this university
+        ug_courses_count = uni.courses.filter(level='UG').count()
+        pg_courses_count = uni.courses.filter(level='PG').count()
+        
+        # Get world ranking from UniversityRanking model
+        world_ranking = None
+        try:
+            from .models import UniversityRanking
+            ranking_obj = UniversityRanking.objects.filter(university=uni).first()
+            if ranking_obj:
+                world_ranking = ranking_obj.world_ranking
+        except:
+            pass
+        
         data.append({
             'university_id': uni.university_id,
             'name': uni.name,
@@ -67,11 +81,14 @@ def get_universities(request):
             'avg_ug_tuition': float(uni.avg_ug_tuition) if uni.avg_ug_tuition else None,
             'avg_pg_tuition': float(uni.avg_pg_tuition) if uni.avg_pg_tuition else None,
             'ranking': uni.ranking,
+            'world_ranking': world_ranking,
             'population': uni.population,
             'acceptance_rate': float(uni.acceptance_rate) if uni.acceptance_rate else None,
             'estimated_living_cost_annual': float(uni.estimated_living_cost) if uni.estimated_living_cost else None,
             'admission_requirements': uni.admission_requirements if is_detail_page else None,
             'graduation_rate': float(uni.graduation_rate) if uni.graduation_rate else None,
+            'ug_courses_count': ug_courses_count,
+            'pg_courses_count': pg_courses_count,
         })
     
     return JsonResponse({'universities': data, 'count': len(data)})
@@ -143,6 +160,24 @@ def get_courses(request):
 def course_search_page(request):
     """Render the course search results page"""
     return render(request, 'course-search.html')
+
+def subjects_api(request):
+    """API endpoint for subject autocomplete"""
+    query = request.GET.get('q', '').strip()
+    subjects = Subject.objects.all()
+    
+    if query:
+        subjects = subjects.filter(name__icontains=query)
+    
+    subjects = subjects.order_by('name')[:20]  # Limit to 20 suggestions
+    
+    data = [{
+        'subject_code': subject.subject_code,
+        'name': subject.name,
+        'slug': subject.slug
+    } for subject in subjects]
+    
+    return JsonResponse({'subjects': data})
 
 def search_courses_api(request):
     """API endpoint for course search with fuzzy matching"""
@@ -222,3 +257,166 @@ def search_courses_api(request):
     data.sort(key=lambda x: x['course_count'], reverse=True)
     
     return JsonResponse({'universities': data, 'count': len(data)})
+
+def compare_rankings(request):
+    """Render the compare rankings page"""
+    return render(request, 'compare-rankings.html')
+
+def get_rankings(request):
+    """API endpoint to fetch university rankings by country"""
+    from .models import UniversityRanking
+    
+    country = request.GET.get('country', '').strip().upper()
+    if country not in ['UK', 'IE']:
+        return JsonResponse({'error': 'Invalid country. Use UK or IE.'}, status=400)
+    
+    # Get latest rankings for the country
+    rankings = UniversityRanking.objects.filter(
+        university__country=country
+    ).select_related('university').order_by('-overall')
+    
+    data = []
+    for ranking in rankings:
+        uni = ranking.university
+        data.append({
+            'university_id': uni.university_id,
+            'university_name': uni.name,
+            'university_slug': uni.slug,
+            'city': uni.city,
+            'overall': float(ranking.overall) if ranking.overall else 0,
+            'arts_humanities': ranking.arts_humanities if ranking.arts_humanities else 0,
+            'life_sciences_medicine': ranking.life_sciences if ranking.life_sciences else 0,
+            'engineering_technology': ranking.engineering_technology if ranking.engineering_technology else 0,
+            'natural_science': ranking.natural_sciences if ranking.natural_sciences else 0,
+            'social_sciences_management': ranking.social_sciences_management if ranking.social_sciences_management else 0,
+            'staff_student_ratio': float(ranking.staff_student_ratio) if ranking.staff_student_ratio else 0,
+            'international_students_ratio': float(ranking.international_students_ratio) if ranking.international_students_ratio else 0,
+            'graduate_prospects': float(ranking.graduate_prospects) if ranking.graduate_prospects else 0,
+            'student_satisfaction': float(ranking.student_satisfaction) if ranking.student_satisfaction else 0,
+        })
+    
+    return JsonResponse({'rankings': data, 'count': len(data)})
+
+def compare_tuition(request):
+    """API endpoint to compare tuition fees across universities"""
+    from .models import Tuition
+    
+    # Get filter parameters (residence_country is for currency conversion only, not filtering)
+    residence_country = request.GET.get('residence', '').strip()
+    dest_country = request.GET.get('destination', '').strip().upper()
+    programme_type = request.GET.get('programme', '').strip().upper()
+    subject_code = request.GET.get('subject', '').strip().upper()
+    
+    # Validate required parameters (residence not required for filtering)
+    if not all([dest_country, programme_type, subject_code]):
+        return JsonResponse({'error': 'Missing required parameters'}, status=400)
+    
+    # Map destination to country code
+    country_map = {'UK': 'UK', 'IRELAND': 'IE', 'IE': 'IE'}
+    country = country_map.get(dest_country, dest_country)
+    
+    # Map programme type to level (need to handle both PG and PGT for postgraduate)
+    level_map = {'UNDERGRADUATE': 'UG', 'POSTGRADUATE': 'PG', 'UG': 'UG', 'PG': 'PG'}
+    level = level_map.get(programme_type, programme_type)
+    
+    # Determine residency status (International is most common for comparison)
+    residency = 'INTL'
+    
+    # Query courses matching the criteria
+    # For postgraduate, include both PG and PGT levels
+    if level == 'PG':
+        courses = Course.objects.filter(
+            university__country=country,
+            level__in=['PG', 'PGT'],
+            subject__subject_code=subject_code
+        ).select_related('university', 'subject').prefetch_related('tuitions')
+    else:
+        courses = Course.objects.filter(
+            university__country=country,
+            level=level,
+            subject__subject_code=subject_code
+        ).select_related('university', 'subject').prefetch_related('tuitions')
+    
+    # Prepare comparison data
+    results = []
+    for course in courses:
+        # Get tuition for international students
+        tuition = course.tuitions.filter(residency=residency).first()
+        
+        if tuition:
+            # Get available scholarships for this university
+            scholarships = course.university.scholarships.filter(level=level).values_list('award_value', flat=True)
+            scholarship_info = ', '.join([str(s) for s in scholarships[:3]]) if scholarships else 'Contact University'
+            
+            results.append({
+                'university_id': course.university.university_id,
+                'university_name': course.university.name,
+                'university_slug': course.university.slug,
+                'course_title': course.title,
+                'course_id': course.course_id,
+                'tuition_fee': float(tuition.tuition_fee),
+                'scholarship': float(tuition.scholarship) if tuition.scholarship else 0,
+                'net_tuition': float(tuition.net_tuition_fee),
+                'tuition_deposit': float(tuition.tuition_deposit) if tuition.tuition_deposit else 0,
+                'currency': tuition.currency,
+                'duration': course.duration,
+                'location': course.location,
+                'start_date': f"{course.start_month} {course.start_year}",
+                'scholarship_info': scholarship_info,
+                'course_url': course.course_url,
+            })
+    
+    # Sort by net tuition (cheapest first)
+    results.sort(key=lambda x: x['net_tuition'])
+    
+    return JsonResponse({
+        'results': results,
+        'count': len(results),
+        'filters': {
+            'country': country,
+            'level': level,
+            'subject': subject_code,
+            'residency': residency
+        }
+    })
+
+def course_detail(request, course_id):
+    """Render the course detail page"""
+    try:
+        course = Course.objects.select_related('university', 'subject').get(course_id=course_id)
+        
+        # Get all tuition records for this course
+        tuitions = course.tuitions.all()
+        
+        # Organize tuition by residency type
+        tuition_data = {}
+        for tuition in tuitions:
+            tuition_data[tuition.residency] = {
+                'fee': tuition.tuition_fee,
+                'scholarship': tuition.scholarship,
+                'deposit': tuition.tuition_deposit,
+                'currency': tuition.currency,
+                'net_fee': tuition.net_tuition_fee
+            }
+        
+        # If EU data doesn't exist, use INTL data for EU
+        if 'EU' not in tuition_data and 'INTL' in tuition_data:
+            tuition_data['EU'] = tuition_data['INTL'].copy()
+        
+        # Get scholarships for this university at the course level
+        scholarships = Scholarship.objects.filter(
+            university=course.university,
+            level=course.level
+        )
+        
+        context = {
+            'course': course,
+            'tuition_data': tuition_data,
+            'scholarships': scholarships,
+        }
+        
+        return render(request, 'course-detail.html', context)
+        
+    except Course.DoesNotExist:
+        return render(request, '404.html', status=404)
+

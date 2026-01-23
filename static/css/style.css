@@ -9,6 +9,11 @@ html {
 
 body {
   @apply overflow-x-hidden dark:bg-darkmode;
+  background-color: #EFFBFF;
+}
+
+body.dark {
+  background-color: inherit;
 }
 
 * {

@@ -15,11 +15,16 @@
     
     <main class="pt-24">
         <!-- Hero Section -->
-        <section class="bg-IcyBreeze dark:bg-darklight py-12">
+        <section style="background-color: #102C46;" class="relative overflow-hidden py-12 md:py-16">
             <div class="container">
-                <div class="text-center">
-                    <h1 data-aos="fade-up">Compare Tuition Fees</h1>
-                    <p class="text-lg text-SlateBlueText dark:text-opacity-80 mt-4 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                <div class="max-w-3xl">
+                    <p class="relative z-0 inline-block text-primary text-lg font-bold before:absolute before:content-[''] before:bg-primary/20 before:w-full before:h-2 before:-z-1 before:bottom-0" data-aos="fade-up" data-aos-delay="100">
+                        Tuition Comparison
+                    </p>
+                    <h1 class="py-4 text-3xl md:text-4xl font-bold text-white" data-aos="fade-up" data-aos-delay="200">
+                        Compare Tuition Fees
+                    </h1>
+                    <p class="text-lg text-white text-opacity-80 font-normal" data-aos="fade-up" data-aos-delay="300">
                         Find the best value for your education. Compare tuition fees, scholarships, and total costs across universities
                     </p>
                 </div>
@@ -27,7 +32,7 @@
         </section>
         
         <!-- Form Section -->
-        <section class="bg-white dark:bg-darkmode py-12">
+        <section class="bg-IcyBreeze dark:bg-darklight py-12">
             <div class="container">
                 <!-- Comparison Form -->
                 <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-22 shadow-lg p-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
@@ -59,8 +64,8 @@
                             </label>
                             <select id="dest-country" name="destination" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
                                 <option value="">Select Destination Country</option>
-                                <option value="uk">UK</option>
-                                <option value="ireland">Ireland</option>
+                                <option value="UK">UK</option>
+                                <option value="IE">Ireland</option>
                             </select>
                         </div>
                         
@@ -71,8 +76,8 @@
                             </label>
                             <select id="programme-type" name="programme" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
                                 <option value="">Select Programme Type</option>
-                                <option value="undergraduate">Undergraduate</option>
-                                <option value="postgraduate">Postgraduate</option>
+                                <option value="UG">Undergraduate</option>
+                                <option value="PG">Postgraduate</option>
                             </select>
                         </div>
                         
@@ -81,17 +86,18 @@
                             <label for="subject" class="block text-base font-medium text-MidnightNavyText dark:text-white mb-2">
                                 Subject <span class="text-red-500">*</span>
                             </label>
-                            <select id="subject" name="subject" required class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option value="">Select Subject</option>
-                                <option value="business">Business & Management</option>
-                                <option value="computer_science">Computer Science</option>
-                                <option value="engineering">Engineering</option>
-                                <option value="medicine">Medicine & Health</option>
-                                <option value="law">Law</option>
-                                <option value="arts">Arts & Humanities</option>
-                                <option value="science">Natural Sciences</option>
-                                <option value="social_science">Social Sciences</option>
-                            </select>
+                            <div class="relative">
+                                <input type="text" 
+                                       id="subject" 
+                                       name="subject" 
+                                       required 
+                                       autocomplete="off"
+                                       placeholder="Type to search subjects..."
+                                       class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <div id="subject-suggestions" class="hidden absolute z-50 w-full mt-1 bg-white dark:bg-dark_card border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- Search Button -->
@@ -101,13 +107,6 @@
                             </button>
                         </div>
                     </form>
-                </div>
-                
-                <!-- Currency Converter Info -->
-                <div class="mt-6 text-center">
-                    <p class="text-sm text-SlateBlueText dark:text-opacity-80">
-                        💱 Fees will be displayed in both GBP and your local currency
-                    </p>
                 </div>
             </div>
         </section>
@@ -119,13 +118,12 @@
                     <h2 class="text-32 mb-4">Tuition Fee Comparison</h2>
                     <div class="flex flex-wrap gap-4 items-center justify-between">
                         <p class="text-SlateBlueText dark:text-opacity-80" id="comparison-count">0 universities found</p>
-                        <div class="flex gap-3">
-                            <button id="sort-cheapest" class="btn_outline btn-2 hover-outline-slide-down">
-                                <span class="!py-2 !px-4">Sort by Lowest Fee</span>
-                            </button>
-                            <button id="sort-scholarship" class="btn_outline btn-2 hover-outline-slide-down">
-                                <span class="!py-2 !px-4">Best Scholarships</span>
-                            </button>
+                        <div>
+                            <label for="sort-by" class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Sort by:</label>
+                            <select id="sort-by" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="lowest">Lowest Fee</option>
+                                <option value="highest">Highest Fee</option>
+                            </select>
                         </div>
                     </div>
                 </div>

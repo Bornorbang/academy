@@ -5,6 +5,13 @@ module.exports = {
     "./templates/**/*.html",
     "./static/js/**/*.js",
   ],
+  safelist: [
+    'bg-white/80',
+    'bg-white/90',
+    'backdrop-blur-md',
+    'dark:bg-secondary/80',
+    'dark:bg-dark_card/80',
+  ],
   theme: {
     extend: {
       maxWidth: {
@@ -109,6 +116,7 @@ module.exports = {
         darktext: "#7F8487",
         dark_border: "#224767",
         dark_input: "#1B2430",
+        dark_card: "#102C46",
       },
       fontSize: {
         58: ["3.625rem", { lineHeight: "5.375rem" }],

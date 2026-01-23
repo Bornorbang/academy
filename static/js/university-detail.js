@@ -116,7 +116,7 @@ function displayUniversityBanner(university) {
     const locationElement = document.getElementById('university-location');
     if (locationElement) {
         const countryName = university.country === 'UK' ? 'United Kingdom' : 'Ireland';
-        locationElement.textContent = `📍 ${university.city}, ${countryName}`;
+        locationElement.textContent = `${university.city}, ${countryName}`;
     }
     
     // Update Visit Website button
@@ -198,12 +198,12 @@ function displayUniversityBanner(university) {
         graduationRateElement.textContent = `${university.graduation_rate}%`;
     }
     
-    // Update global ranking
+    // Update global ranking from UniversityRanking world_ranking field
     const globalRankingElement = document.getElementById('global-ranking');
     const rankingBadge = document.getElementById('ranking-badge');
-    if (university.ranking && university.ranking > 0) {
+    if (university.world_ranking && university.world_ranking > 0) {
         if (globalRankingElement) {
-            globalRankingElement.textContent = `#${university.ranking} Worldwide`;
+            globalRankingElement.textContent = `#${university.world_ranking} Worldwide`;
         }
     } else {
         // Hide ranking badge if no ranking available
@@ -272,7 +272,7 @@ function displayUniversityInfo(university) {
     const infoHTML = `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Total Students Card -->
-            <div class="bg-white dark:bg-dark_card rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <div class="bg-white/80 backdrop-blur-md dark:bg-dark_card/80 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #102C46;">
                         <svg class="w-6 h-6" style="color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -287,7 +287,7 @@ function displayUniversityInfo(university) {
             </div>
             
             <!-- Acceptance Rate Card -->
-            <div class="bg-white dark:bg-dark_card rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <div class="bg-white/80 backdrop-blur-md dark:bg-dark_card/80 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #102C46;">
                         <svg class="w-6 h-6" style="color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,7 +302,7 @@ function displayUniversityInfo(university) {
             </div>
             
             <!-- Avg UG Tuition Card -->
-            <div class="bg-white dark:bg-dark_card rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <div class="bg-white/80 backdrop-blur-md dark:bg-dark_card/80 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #102C46;">
                         <svg class="w-6 h-6" style="color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -317,7 +317,7 @@ function displayUniversityInfo(university) {
             </div>
             
             <!-- Avg PG Tuition Card -->
-            <div class="bg-white dark:bg-dark_card rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
+            <div class="bg-white/80 backdrop-blur-md dark:bg-dark_card/80 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: #102C46;">
                         <svg class="w-6 h-6" style="color: white;" fill="none" stroke="currentColor" viewBox="0 0 24 24">

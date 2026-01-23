@@ -263,14 +263,14 @@ function displayMoreCourses() {
 // Render university card with courses
 function renderUniversityCard() {
     const card = `
-        <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg overflow-hidden">n">
             <!-- University Header -->
-            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="p-6 border-b border-gray-200/20">
                 <div class="flex items-start justify-between">
                     <div class="flex items-start gap-4">
                         <img src="${currentUniversity.logo || '/static/images/mine/default-uni-logo.png'}" 
                              alt="${currentUniversity.name}" 
-                             class="w-16 h-16 object-contain rounded-lg border border-gray-200 dark:border-gray-600 bg-white p-2"
+                             class="w-16 h-16 object-contain rounded-lg border border-gray-200/30 bg-white/5 p-2"
                              onerror="this.src='/static/images/mine/default-uni-logo.png'">
                         <div>
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-1">
@@ -316,7 +316,7 @@ function renderCoursesList() {
             : course.university_website;
         
         return `
-        <div class="p-6 hover:bg-gray-50 dark:hover:bg-dark_input transition-colors border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+        <div class="p-6 hover:bg-white/5 transition-colors border-b border-gray-200/20 last:border-b-0">
             <!-- Desktop Layout -->
             <div class="hidden lg:flex items-center justify-between gap-4">
                 <div class="flex-1">
@@ -430,9 +430,8 @@ function setupCourseDetails() {
     detailsBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const courseId = this.dataset.courseId;
-            // TODO: Navigate to course details page when implemented
-            console.log('View details for course:', courseId);
-            alert('Course details page will be implemented soon!');
+            // Navigate to course details page
+            window.location.href = `/courses/${courseId}/`;
         });
     });
 }

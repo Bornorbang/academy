@@ -6,13 +6,32 @@ let displayedUniversities = [];
 let currentPage = 0;
 const UNIVERSITIES_PER_PAGE = 10;
 let activeLevel = 'UG'; // Default to Undergraduate
-let activeCountry = 'IE'; // Default to Ireland
+let activeCountry = 'UK'; // Default to UK
 
 // Load universities on page load
 document.addEventListener('DOMContentLoaded', function() {
+    initializeFilterButtons();
     setupEventListeners();
     loadUniversities();
 });
+
+function initializeFilterButtons() {
+    // Initialize level buttons
+    document.querySelectorAll('.level-btn, .level-btn-mobile').forEach(btn => {
+        if (btn.classList.contains('active')) {
+            btn.style.backgroundColor = '#102C46';
+            btn.style.borderColor = '#102C46';
+        }
+    });
+    
+    // Initialize country buttons
+    document.querySelectorAll('.country-btn, .country-btn-mobile').forEach(btn => {
+        if (btn.classList.contains('active')) {
+            btn.style.backgroundColor = '#102C46';
+            btn.style.borderColor = '#102C46';
+        }
+    });
+}
 
 function setupEventListeners() {
     // Search input - Desktop
@@ -295,7 +314,7 @@ function createUniversityCard(uni) {
     const isFavorite = isUniversityFavorite(uni.university_id);
     
     return `
-        <div class="bg-white dark:bg-dark_card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200 dark:border-gray-700">
+        <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
             <div class="p-8">
                 <!-- Desktop Layout -->
                 <div class="hidden lg:flex items-start gap-6">

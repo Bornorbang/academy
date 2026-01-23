@@ -121,6 +121,9 @@ class UniversityRanking(models.Model):
     )
     source = models.CharField(max_length=10, choices=SOURCE_CHOICES)
     year = models.IntegerField()
+    
+    overall = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    world_ranking = models.IntegerField(null=True, blank=True)
 
     arts_humanities = models.IntegerField(null=True, blank=True)
     life_sciences = models.IntegerField(null=True, blank=True)

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.classList.remove('active');
                 btn.style.backgroundColor = '';
                 btn.style.borderColor = '';
-                btn.style.color = '';
+                btn.style.color = '#374151'; // gray-700 for inactive state
             }
             
             btn.addEventListener('click', function() {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     b.classList.remove('active');
                     b.style.backgroundColor = '';
                     b.style.borderColor = '';
-                    b.style.color = '';
+                    b.style.color = '#374151'; // gray-700 for inactive state
                 });
                 this.classList.add('active');
                 this.style.backgroundColor = '#102C46';
