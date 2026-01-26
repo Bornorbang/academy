@@ -289,6 +289,9 @@ function loadMoreUniversities() {
             displayedUniversities.push(uni);
         });
         
+        // Initialize favorite buttons for newly added cards
+        initializeFavoriteButtons();
+        
         currentPage++;
         
         // Show/hide load more button
@@ -337,8 +340,7 @@ function createUniversityCard(uni) {
                     </div>
                     
                     <!-- Favorite Button -->
-                    <button onclick="toggleFavorite('${uni.university_id}')" 
-                            class="favorite-btn p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex-shrink-0"
+                    <button class="favorite-btn p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex-shrink-0"
                             data-university-id="${uni.university_id}"
                             title="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
                         <svg class="w-6 h-6 ${isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}" 
@@ -365,8 +367,7 @@ function createUniversityCard(uni) {
                         </a>
                         
                         <!-- Favorite Button -->
-                        <button onclick="toggleFavorite('${uni.university_id}')" 
-                                class="favorite-btn p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex-shrink-0"
+                        <button class="favorite-btn p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex-shrink-0"
                                 data-university-id="${uni.university_id}"
                                 title="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
                             <svg class="w-6 h-6 ${isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}" 
@@ -414,7 +415,7 @@ function createUniversityCard(uni) {
                 
                 <!-- Mobile Buttons -->
                 <div class="lg:hidden flex gap-4">
-                    <a href="/university-detail/${uni.university_id}/" 
+                    <a href="/universities/${uni.slug}/" 
                        class="flex-1 px-6 py-3 text-white text-center rounded-lg hover:opacity-90 transition-all text-sm font-semibold"
                        style="background-color: #102C46;">
                         Details
@@ -514,30 +515,70 @@ function clearFilters() {
 }
 
 // Favorites functionality
+function initializeFavoriteButtons() {
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+        // Remove any existing listeners by cloning
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const universityId = this.dataset.universityId;
+            toggleFavorite(universityId, this);
+        });
+    });
+}
+
 function isUniversityFavorite(universityId) {
     const favorites = JSON.parse(localStorage.getItem('universityFavorites') || '[]');
     return favorites.some(fav => fav.university_id === universityId);
 }
 
-function toggleFavorite(universityId) {
-    // Find the button to get university data
-    const btn = document.querySelector(`button[onclick="toggleFavorite('${universityId}')"]`);
+function toggleFavorite(universityId, btn) {
+    if (!btn) {
+        btn = document.querySelector(`.favorite-btn[data-university-id="${universityId}"]`);
+    }
     if (!btn) return;
     
+    // Find the card - try multiple selectors
+    const card = btn.closest('.bg-white') || 
+                 btn.closest('.bg-white\\/10') || 
+                 btn.closest('[class*="bg-white"]') ||
+                 btn.closest('div[class*="backdrop-blur"]');
+    
+    if (!card) {
+        console.error('Could not find card element');
+        return;
+    }
+    
+    // Extract university data
     const universityData = {
         university_id: universityId,
-        name: btn.closest('.bg-white').querySelector('h3').textContent,
-        slug: btn.closest('.bg-white').querySelector('a[href*="/universities/"]').getAttribute('href').split('/')[2],
         type: 'university'
     };
     
-    // Try to get more data from the card
-    const card = btn.closest('.bg-white');
+    // Get name
+    const nameEl = card.querySelector('h3') || card.querySelector('h2');
+    universityData.name = nameEl ? nameEl.textContent.trim() : 'University';
+    
+    // Get slug
+    const link = card.querySelector('a[href*="/universities/"]');
+    if (link) {
+        const href = link.getAttribute('href');
+        const slugMatch = href.match(/\/universities\/([^\/]+)/);
+        universityData.slug = slugMatch ? slugMatch[1] : universityId;
+    } else {
+        universityData.slug = universityId;
+    }
+    
+    // Get location
     const locationText = card.querySelector('.text-gray-600')?.textContent || '';
     const parts = locationText.split(',');
     universityData.city = parts[0]?.trim() || '';
     universityData.country = parts[1]?.trim() || '';
     
+    // Get banner image
     const banner = card.querySelector('img');
     if (banner) {
         universityData.banner = banner.src;

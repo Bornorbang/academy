@@ -104,7 +104,7 @@
                     </button>
                     {% if course.modules %}
                     <button id="modules-tab" class="px-6 py-3 font-semibold border-b-4 border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" style="margin-bottom: -1px;">
-                        Modules & Content
+                        Modules
                     </button>
                     {% endif %}
                 </div>
@@ -146,6 +146,26 @@
             </div>
         </section>
         {% endif %}
+        
+        <!-- Related Courses Section -->
+        <section class="py-12" style="background-color: #102C46;">
+            <div class="container text-center">
+                <h2 class="text-2xl font-semibold text-white mb-8">Explore More Courses</h2>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="{% url 'university-courses' course.university.slug %}"
+                       class="px-8 py-4 text-gray-900 rounded-lg font-semibold transition-all text-base border border-gray-200"
+                       style="background-color: #EFFBFF;"
+                       onmouseover="this.style.backgroundColor='#D6F5FF'"
+                       onmouseout="this.style.backgroundColor='#EFFBFF'">
+                        All Courses at {{ course.university.name }}
+                    </a>
+                    <a href="{% url 'compare-tuition' %}"
+                       class="px-8 py-4 rounded-lg font-semibold transition-all text-base border-2 border-white text-white hover:bg-white hover:text-[#102C46]">
+                        Compare Tuition Fees
+                    </a>
+                </div>
+            </div>
+        </section>
         
         <!-- Tuition Fees and Scholarships Section -->
         <section class="bg-IcyBreeze dark:bg-darklight py-12">
@@ -272,27 +292,6 @@
                     </div>
                 </div>
                 {% endif %}
-            </div>
-        </section>
-        
-        <!-- Related Courses Section -->
-        <section class="dark:bg-darkmode py-12">
-            <div class="container text-center">
-                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Explore More Courses</h2>
-                <div class="flex flex-wrap gap-4 justify-center">
-                    <a href="{% url 'university-courses' course.university.slug %}"
-                       class="px-8 py-4 text-gray-900 dark:text-white rounded-lg font-semibold transition-all text-base border border-gray-200 dark:border-gray-700"
-                       style="background-color: #EFFBFF;"
-                       onmouseover="this.style.backgroundColor='#D6F5FF'"
-                       onmouseout="this.style.backgroundColor='#EFFBFF'">
-                        All Courses at {{ course.university.name }}
-                    </a>
-                    <a href="{% url 'compare-tuition' %}"
-                       class="px-8 py-4 text-white rounded-lg font-semibold transition-all text-base hover:opacity-90"
-                       style="background-color: #102C46;">
-                        Compare Tuition Fees
-                    </a>
-                </div>
             </div>
         </section>
     </main>

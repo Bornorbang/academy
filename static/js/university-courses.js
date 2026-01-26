@@ -263,7 +263,7 @@ function displayMoreCourses() {
 // Render university card with courses
 function renderUniversityCard() {
     const card = `
-        <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg overflow-hidden">n">
+        <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg overflow-hidden">
             <!-- University Header -->
             <div class="p-6 border-b border-gray-200/20">
                 <div class="flex items-start justify-between">
@@ -319,12 +319,12 @@ function renderCoursesList() {
         <div class="p-6 hover:bg-white/5 transition-colors border-b border-gray-200/20 last:border-b-0">
             <!-- Desktop Layout -->
             <div class="hidden lg:flex items-center justify-between gap-4">
-                <div class="flex-1">
+                <a href="/courses/${course.course_id}/" class="flex-1 cursor-pointer hover:opacity-80 transition-opacity">
                     <h4 class="text-base font-medium text-gray-900 dark:text-white mb-1">
                         ${course.course_title}
                     </h4>
                     ${course.location ? `<p class="text-sm text-gray-600 dark:text-gray-400">${course.location}</p>` : ''}
-                </div>
+                </a>
                 <div class="flex items-center gap-3">
                     <button class="course-details-btn px-6 py-2.5 text-sm font-medium text-white rounded-lg hover:opacity-90 transition-all whitespace-nowrap" style="background-color: #3B82F6;" data-course-id="${course.course_id}">
                         Details
@@ -339,12 +339,12 @@ function renderCoursesList() {
             
             <!-- Mobile Layout -->
             <div class="lg:hidden">
-                <div class="flex-1 mb-3">
+                <a href="/courses/${course.course_id}/" class="flex-1 mb-3 block cursor-pointer hover:opacity-80 transition-opacity">
                     <h4 class="text-base font-medium text-gray-900 dark:text-white mb-1">
                         ${course.course_title}
                     </h4>
                     ${course.location ? `<p class="text-sm text-gray-600 dark:text-gray-400">${course.location}</p>` : ''}
-                </div>
+                </a>
                 <div class="grid grid-cols-2 gap-3">
                     <button class="course-details-btn px-6 py-2.5 text-sm font-medium text-white rounded-lg hover:opacity-90 transition-all" style="background-color: #3B82F6;" data-course-id="${course.course_id}">
                         Details

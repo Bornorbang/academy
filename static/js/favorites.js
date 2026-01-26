@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create university card
     function createUniversityCard(university) {
         const imageUrl = university.banner || '/static/images/mine/about-us.jpg';
+        const location = university.city && university.country 
+            ? `${university.city}, ${university.country}` 
+            : university.city || university.country || 'Location not available';
         
         const cardHTML = `
             <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all p-6" data-type="university" data-id="${university.university_id}">
@@ -21,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <img src="${imageUrl}" alt="${university.name}" class="w-16 h-16 object-cover rounded-lg border border-gray-200 dark:border-gray-600 flex-shrink-0">
                     <div class="flex-1 min-w-0">
                         <a href="/universities/${university.slug}/" class="text-lg font-bold text-gray-900 dark:text-white hover:text-primary transition-colors block">${university.name}</a>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm">${university.city}, ${university.country === 'IE' ? 'Ireland' : 'UK'}</p>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">${location}</p>
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-3">
