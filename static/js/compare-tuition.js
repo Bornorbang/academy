@@ -350,7 +350,8 @@ function createComparisonCard(result, index) {
     const netTuitionOriginal = formatCurrency(netTuitionInGBP, currency);
     const tuitionConverted = formatCurrency(tuitionInUserCurrency, userCurrency);
     const netTuitionConverted = formatCurrency(netTuitionInUserCurrency, userCurrency);
-    const depositConverted = depositInUserCurrency > 0 ? formatCurrency(depositInUserCurrency, userCurrency) : 'Contact University';
+    const depositOriginal = result.tuition_deposit > 0 ? formatCurrency(result.tuition_deposit, currency) : 'Contact University';
+    const depositConverted = depositInUserCurrency > 0 ? formatCurrency(depositInUserCurrency, userCurrency) : null;
     
     const savingsAmount = result.scholarship > 0 ? formatCurrency(result.scholarship, currency) : null;
     const savingsPercent = result.scholarship > 0 ? Math.round((result.scholarship / result.tuition_fee) * 100) : 0;
@@ -361,6 +362,17 @@ function createComparisonCard(result, index) {
     return `
         <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg overflow-hidden transition-all hover:shadow-xl" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}">
             <div class="p-6">
+                <!-- Lowest Fee Badge -->
+                ${index === 0 ? `
+                <div class="mb-3 flex justify-center">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Lowest Fee
+                    </span>
+                </div>
+                ` : ''}
                 <!-- University Name -->
                 <div class="mb-3 pb-3 border-b border-gray-200 dark:border-gray-700">
                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">
@@ -387,7 +399,8 @@ function createComparisonCard(result, index) {
                 <!-- Tuition Deposit -->
                 <div class="mb-3 pb-3 border-b border-gray-200 dark:border-gray-700">
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Tuition Deposit</p>
-                    <p class="text-base font-semibold text-gray-900 dark:text-white">${depositConverted}</p>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white">${depositOriginal}</p>
+                    ${depositConverted && userCurrency !== currency ? `<p class="text-sm text-gray-500 dark:text-gray-400">≈ ${depositConverted}</p>` : ''}
                 </div>
                 
                 <!-- Scholarship Info -->
@@ -403,7 +416,7 @@ function createComparisonCard(result, index) {
                 <!-- Net Tuition Fee (no border) -->
                 <div class="mb-4">
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Net Tuition Fee</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">${netTuitionOriginal}</p>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white">${netTuitionOriginal}</p>
                     ${userCurrency !== currency ? `<p class="text-sm text-gray-500 dark:text-gray-400">≈ ${netTuitionConverted}</p>` : ''}
                 </div>
                 

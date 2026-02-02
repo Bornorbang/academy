@@ -47,6 +47,7 @@ urlpatterns = [
     path('privacy/', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
     path('terms/', TemplateView.as_view(template_name='terms.html'), name='terms'),
     path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
+    path('contact-us/', views.contact_us, name='contact-us'),
 ]
 
 if settings.DEBUG:

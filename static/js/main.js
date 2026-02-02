@@ -84,6 +84,18 @@ mobileCompareToggle?.addEventListener('click', () => {
 });
 
 // ======================================
+// Mobile Get Advice Dropdown
+// ======================================
+const mobileAdviceToggle = document.getElementById('mobile-advice-toggle');
+const mobileAdviceDropdown = document.getElementById('mobile-advice-dropdown');
+const mobileAdviceArrow = document.querySelector('.mobile-advice-arrow');
+
+mobileAdviceToggle?.addEventListener('click', () => {
+    mobileAdviceDropdown.classList.toggle('hidden');
+    mobileAdviceArrow.classList.toggle('rotate-180');
+});
+
+// ======================================
 // Authentication Modals
 // ======================================
 const signInBtn = document.getElementById('sign-in-btn');

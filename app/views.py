@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import University, Course, Scholarship, Subject
 from django.db.models import Q, Count
+from django.contrib import messages
 import random
 from difflib import SequenceMatcher
 
@@ -420,3 +421,41 @@ def course_detail(request, course_id):
     except Course.DoesNotExist:
         return render(request, '404.html', status=404)
 
+
+def contact_us(request):
+    """Handle contact form submissions"""
+    if request.method == 'POST':
+        # Get form data
+        first_name = request.POST.get('first_name', '').strip()
+        last_name = request.POST.get('last_name', '').strip()
+        email = request.POST.get('email', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        subject = request.POST.get('subject', '').strip()
+        message = request.POST.get('message', '').strip()
+        
+        # Basic validation
+        if not all([first_name, last_name, email, subject, message]):
+            messages.error(request, 'Please fill in all required fields.')
+            return render(request, 'contact-us.html')
+        
+        # Here you would typically:
+        # 1. Save to database (create a ContactEnquiry model)
+        # 2. Send email notification to admin
+        # 3. Send confirmation email to user
+        
+        # For now, we'll just show a success message
+        messages.success(request, f'Thank you {first_name}! Your enquiry has been submitted successfully. We will get back to you soon.')
+        
+        # Log the enquiry (optional - for development)
+        print(f"\n=== NEW CONTACT ENQUIRY ===")
+        print(f"Name: {first_name} {last_name}")
+        print(f"Email: {email}")
+        print(f"Phone: {phone}")
+        print(f"Subject: {subject}")
+        print(f"Message: {message}")
+        print("=========================\n")
+        
+        return render(request, 'contact-us.html')
+    
+    # GET request - just render the form
+    return render(request, 'contact-us.html')
