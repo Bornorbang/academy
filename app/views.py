@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from .models import University, Course, Scholarship, Subject
 from django.db.models import Q, Count
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 import random
 from difflib import SequenceMatcher
 
@@ -438,22 +440,38 @@ def contact_us(request):
             messages.error(request, 'Please fill in all required fields.')
             return render(request, 'contact-us.html')
         
-        # Here you would typically:
-        # 1. Save to database (create a ContactEnquiry model)
-        # 2. Send email notification to admin
-        # 3. Send confirmation email to user
+        # Prepare email content
+        email_subject = f'Contact Form: {subject}'
+        email_message = f"""
+New contact form submission:
+
+Name: {first_name} {last_name}
+Email: {email}
+Phone: {phone if phone else 'Not provided'}
+Subject: {subject}
+
+Message:
+{message}
+
+---
+This email was sent from the University Tuition Compare contact form.
+        """
         
-        # For now, we'll just show a success message
-        messages.success(request, f'Thank you {first_name}! Your enquiry has been submitted successfully. We will get back to you soon.')
-        
-        # Log the enquiry (optional - for development)
-        print(f"\n=== NEW CONTACT ENQUIRY ===")
-        print(f"Name: {first_name} {last_name}")
-        print(f"Email: {email}")
-        print(f"Phone: {phone}")
-        print(f"Subject: {subject}")
-        print(f"Message: {message}")
-        print("=========================\n")
+        try:
+            # Send email to info@universitytuitioncompare.com
+            send_mail(
+                subject=email_subject,
+                message=email_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL],
+                fail_silently=False,
+            )
+            
+            messages.success(request, f'Thank you {first_name}! Your enquiry has been submitted successfully. We will get back to you soon.')
+        except Exception as e:
+            # Log error and show user-friendly message
+            print(f"Error sending email: {e}")
+            messages.error(request, 'There was an error submitting your enquiry. Please try again or email us directly at info@universitytuitioncompare.com')
         
         return render(request, 'contact-us.html')
     

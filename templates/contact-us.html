@@ -58,7 +58,7 @@
                     <div class="bg-white dark:bg-secondary rounded-lg shadow-lg p-8" data-aos="fade-up">
                         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send Us an Enquiry</h2>
                         
-                        <form method="POST" action="{% url 'contact-us' %}" class="space-y-6">
+                        <form method="POST" action="{% url 'contact-us' %}" id="contact-form" class="space-y-6">
                             {% csrf_token %}
                             
                             <!-- Name Fields -->
@@ -145,23 +145,20 @@
                                           placeholder="Tell us how we can help you..."></textarea>
                             </div>
 
-                            <!-- Privacy Notice -->
-                            <div class="bg-gray-50 dark:bg-darkmode p-4 rounded-lg border border-gray-200 dark:border-gray-700">
-                                <p class="text-sm text-gray-600 dark:text-gray-400">
-                                    By submitting this form, you agree to our <a href="{% url 'privacy' %}" class="text-primary hover:underline">Privacy Policy</a>. 
-                                    We will use your information to respond to your enquiry and may contact you about relevant services.
-                                </p>
-                            </div>
-
                             <!-- Submit Button -->
                             <div class="flex justify-end">
                                 <button type="submit" 
+                                        id="submit-btn"
                                         class="px-8 py-4 text-white rounded-lg font-semibold transition-all duration-300 hover:opacity-90 flex items-center gap-2"
                                         style="background-color: #102C46;">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg id="send-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
-                                    Send Message
+                                    <svg id="spinner" class="hidden animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    <span id="btn-text">Send Message</span>
                                 </button>
                             </div>
                         </form>
@@ -177,5 +174,21 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        // Contact form loading spinner
+        document.getElementById('contact-form')?.addEventListener('submit', function() {
+            const submitBtn = document.getElementById('submit-btn');
+            const sendIcon = document.getElementById('send-icon');
+            const spinner = document.getElementById('spinner');
+            const btnText = document.getElementById('btn-text');
+            
+            if (submitBtn && sendIcon && spinner && btnText) {
+                submitBtn.disabled = true;
+                sendIcon.classList.add('hidden');
+                spinner.classList.remove('hidden');
+                btnText.textContent = 'Sending...';
+            }
+        });
+    </script>
 </body>
 </html>
