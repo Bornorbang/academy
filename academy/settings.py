@@ -131,5 +131,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'University Tuition Compare <info@universitytuitioncompare.com>'
+DEFAULT_FROM_EMAIL = 'University Tuition Compare <info@mg.universitytuitioncompare.com>'
 CONTACT_EMAIL = 'info@universitytuitioncompare.com'  

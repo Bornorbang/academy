@@ -255,7 +255,7 @@
                             <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                                 For the most up-to-date tuition information and payment plans, please visit the official course website.
                             </p>
-                            <a href="{{ course.course_url }}" target="_blank" rel="noopener noreferrer"
+                            <a href="{% if 'http' in course.course_url %}{{ course.course_url }}{% else %}https://{{ course.course_url }}{% endif %}" target="_blank" rel="noopener noreferrer"
                                class="inline-block px-8 py-3 text-white rounded-lg font-semibold transition-all text-base hover:opacity-90"
                                style="background-color: #102C46;">
                                 Visit Course Website

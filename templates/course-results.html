@@ -34,14 +34,24 @@
             <div class="container">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <!-- Left Sidebar: Filters (3 columns) -->
-                    <aside class="hidden lg:block lg:col-span-3">
-                        <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg p-6 sticky top-24">
-                            <div class="flex justify-between items-center mb-6">
-                                <h2 class="text-xl font-bold">Filters</h2>
-                                <button id="clear-filters" class="text-primary text-sm hover:underline">Clear All</button>
-                            </div>
-                            
-                            <!-- Level of Study -->
+            <aside class="hidden lg:block lg:col-span-3">
+                <div class="bg-white/10 backdrop-blur-md border border-gray-200/30 rounded-lg shadow-lg p-6 sticky top-24">
+                    <!-- New Search Button -->
+                    <div class="mb-6">
+                        <a href="/find-course" class="btn btn-1 hover-filled-slide-down rounded-lg overflow-hidden w-full block text-center">
+                            <span class="!py-2.5 flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                                New Search
+                            </span>
+                        </a>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Filters</h2>
+                        <button id="clear-filters" class="text-primary text-sm hover:underline">Clear All</button>
+                    </div>                            <!-- Level of Study -->
                             <div class="mb-6">
                                 <h3 class="font-bold mb-3 text-sm">Level of Study</h3>
                                 <select id="filter-level" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-primary">
@@ -51,17 +61,15 @@
                                 </select>
                             </div>
                             
-                            <!-- Destination Country -->
-                            <div class="mb-6">
-                                <h3 class="font-bold mb-3 text-sm">Destination Country</h3>
-                                <select id="filter-country" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-primary">
-                                    <option value="">All Countries</option>
-                                    <option value="uk">UK</option>
-                                    <option value="ireland">Ireland</option>
-                                </select>
-                            </div>
-                            
-                            <!-- Study Start Year -->
+                <!-- Destination Country -->
+                <div class="mb-6">
+                    <h3 class="font-bold mb-3 text-sm">Destination Country</h3>
+                    <select id="filter-country" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-primary">
+                        <option value="" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">All Countries</option>
+                        <option value="uk" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">UK</option>
+                        <option value="ireland" class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Ireland</option>
+                    </select>
+                </div>                            <!-- Study Start Year -->
                             <div class="mb-6">
                                 <h3 class="font-bold mb-3 text-sm">Study Start Year</h3>
                                 <select id="filter-year" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-primary">

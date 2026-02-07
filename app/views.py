@@ -109,11 +109,18 @@ def get_scholarships(request):
     for scholarship in scholarships:
         data.append({
             'name': scholarship.name,
-            'level': scholarship.level,
+            'level': scholarship.get_level_display(),
+            'eligibility': scholarship.eligibility,
             'award_type': scholarship.award_type,
             'award_value': scholarship.award_value,
             'currency': scholarship.currency,
+            'deadline': scholarship.deadline.strftime('%B %d, %Y') if scholarship.deadline else 'Rolling basis',
+            'requirements': scholarship.requirements,
             'description': scholarship.description,
+            'url': scholarship.url,
+            'university_id': scholarship.university.university_id if scholarship.university else None,
+            'university_name': scholarship.university.name if scholarship.university else 'Various Universities',
+            'university_country': scholarship.university.country if scholarship.university else None,
         })
     
     return JsonResponse({'scholarships': data, 'count': len(data)})

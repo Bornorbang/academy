@@ -7,28 +7,24 @@ let filteredScholarships = [];
 // Load scholarships data
 async function loadScholarships() {
     try {
-        const response = await fetch('/static/data/scholarships.csv');
-        const text = await response.text();
+        // Fetch all scholarships from the database
+        const allScholarships = [];
         
-        // Parse CSV
-        const lines = text.split('\n');
-        const headers = lines[0].split(',').map(h => h.trim());
+        // We need to fetch scholarships for all universities
+        // Since the API requires university_id, we'll fetch from all universities
+        const universitiesResponse = await fetch('/api/universities/');
+        const universitiesData = await universitiesResponse.json();
         
-        scholarshipsData = lines.slice(1)
-            .filter(line => line.trim())
-            .map(line => {
-                const values = parseCSVLine(line);
-                const scholarship = {};
-                headers.forEach((header, index) => {
-                    scholarship[header] = values[index] || '';
-                });
-                return scholarship;
-            });
+        // Fetch scholarships for each university
+        for (const university of universitiesData.universities) {
+            const response = await fetch(`/api/scholarships/?university_id=${university.university_id}`);
+            const data = await response.json();
+            allScholarships.push(...data.scholarships);
+        }
         
+        scholarshipsData = allScholarships;
         console.log(`Loaded ${scholarshipsData.length} scholarships`);
-        
-        // Load universities for mapping
-        await loadUniversities();
+        console.log('First scholarship:', scholarshipsData[0]); // Debug log
         
         // Populate filters
         populateFilters();
@@ -156,8 +152,8 @@ function createScholarshipCard(scholarship, index) {
     card.setAttribute('data-aos', 'fade-up');
     card.setAttribute('data-aos-delay', (index % 4) * 100);
     
-    // Get university name
-    const universityName = universitiesData[scholarship.university_id]?.name || 'Various Universities';
+    // Get university name from scholarship data
+    const universityName = scholarship.university_name || 'Various Universities';
     
     // Format award value
     const awardValue = formatAwardValue(scholarship.award_value, scholarship.currency);
@@ -328,13 +324,12 @@ function filterScholarships() {
     // Filter by location (country)
     if (locationFilter) {
         filtered = filtered.filter(s => {
-            const university = universitiesData[s.university_id];
-            if (!university) return false;
+            if (!s.university_country) return false;
             
             if (locationFilter === 'UK') {
-                return university.country === 'UK';
+                return s.university_country === 'UK';
             } else if (locationFilter === 'IE') {
-                return university.country === 'IE';
+                return s.university_country === 'IE';
             }
             return false;
         });
@@ -343,7 +338,7 @@ function filterScholarships() {
     // Filter by search query
     if (searchQuery) {
         filtered = filtered.filter(s => {
-            const uniName = universitiesData[s.university_id]?.name || '';
+            const uniName = s.university_name || '';
             const searchText = `${s.name} ${s.description} ${s.eligibility} ${uniName}`.toLowerCase();
             return searchText.includes(searchQuery);
         });

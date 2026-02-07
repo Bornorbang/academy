@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     let subject = urlParams.get('subject') || '';
     let level = urlParams.get('level') || 'UG';
-    let country = urlParams.get('country') || 'IE';
+    let country = urlParams.get('country') || 'UK';
     
     // State
     let allUniversities = [];
@@ -74,18 +74,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.style.color = 'white';
             } else {
                 btn.classList.remove('active');
-                btn.style.backgroundColor = '';
-                btn.style.borderColor = '';
-                btn.style.color = '';
+                btn.style.backgroundColor = 'white';
+                btn.style.borderColor = '#d1d5db';
+                btn.style.color = '#111827';
             }
             
             btn.addEventListener('click', function() {
                 country = btnCountry;
                 document.querySelectorAll('.country-btn, .country-btn-mobile').forEach(b => {
                     b.classList.remove('active');
-                    b.style.backgroundColor = '';
-                    b.style.borderColor = '';
-                    b.style.color = '';
+                    b.style.backgroundColor = 'white';
+                    b.style.borderColor = '#d1d5db';
+                    b.style.color = '#111827';
                 });
                 this.classList.add('active');
                 this.style.backgroundColor = '#102C46';
@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (filterSubject) {
             filterSubject.addEventListener('input', debounce(function() {
                 subject = this.value.trim();
+                updateSearchInfo();
                 loadUniversities();
             }, 500));
         }
@@ -107,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
             filterSubjectMobile.addEventListener('input', debounce(function() {
                 subject = this.value.trim();
                 if (filterSubject) filterSubject.value = subject;
+                updateSearchInfo();
                 loadUniversities();
             }, 500));
         }
@@ -114,12 +116,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear filters
         document.getElementById('clear-filters')?.addEventListener('click', clearFilters);
         document.getElementById('clear-filters-mobile')?.addEventListener('click', clearFilters);
+        
+        // New Search buttons
+        document.getElementById('new-search')?.addEventListener('click', performNewSearch);
+        document.getElementById('new-search-mobile')?.addEventListener('click', performNewSearch);
     }
     
     function clearFilters() {
         subject = '';
         level = 'UG';
-        country = 'IE';
+        country = 'UK';
         
         document.getElementById('filter-subject').value = '';
         document.getElementById('filter-subject-mobile').value = '';
@@ -358,4 +364,43 @@ document.addEventListener('DOMContentLoaded', function() {
         originalDisplayMore();
         initializeFavorites();
     };
+    
+    // Perform new search with current filters
+    function performNewSearch() {
+        // Get current filter values - check which button was clicked
+        const clickedBtn = event?.target?.closest('button');
+        const isMobile = clickedBtn?.id === 'new-search-mobile';
+        
+        if (isMobile) {
+            subject = document.getElementById('filter-subject-mobile')?.value || '';
+        } else {
+            subject = document.getElementById('filter-subject')?.value || '';
+        }
+        
+        // Update search info text
+        updateSearchInfo();
+        
+        // Show spinner
+        const spinner = isMobile ? document.getElementById('new-search-spinner-mobile') : document.getElementById('new-search-spinner');
+        const text = isMobile ? document.getElementById('new-search-text-mobile') : document.getElementById('new-search-text');
+        const btn = clickedBtn;
+        
+        if (spinner && text && btn) {
+            spinner.classList.remove('hidden');
+            text.textContent = 'Searching...';
+            btn.disabled = true;
+        }
+        
+        // Load universities with current filters
+        loadUniversities();
+        
+        // Hide spinner after load completes (add delay to ensure UI updates)
+        setTimeout(() => {
+            if (spinner && text && btn) {
+                spinner.classList.add('hidden');
+                text.textContent = 'New Search';
+                btn.disabled = false;
+            }
+        }, 1000);
+    }
 });

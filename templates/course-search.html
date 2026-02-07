@@ -37,7 +37,7 @@
                 <div class="flex gap-12 items-start">
                     
                     <!-- Left Column: Filters (30%) - Hidden on mobile/tablet -->
-                    <aside class="hidden lg:block w-[30%] sticky top-24" style="max-height: calc(100vh - 6rem); overflow-y: auto;">
+                    <aside class="hidden lg:block w-[30%] sticky top-24">
                         <div class="bg-white dark:bg-secondary rounded-lg shadow-round-box p-6 border border-gray-200 dark:border-gray-700">
                             <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Filter Results</h2>
                             
@@ -71,18 +71,29 @@
                                     Location
                                 </label>
                                 <div class="grid grid-cols-2 gap-3">
-                                    <button data-country="UK" class="country-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                    <button data-country="UK" class="country-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
                                         UK
                                     </button>
-                                    <button data-country="IE" class="country-btn px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                    <button data-country="IE" class="country-btn px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-900 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
                                         Ireland
                                     </button>
                                 </div>
                             </div>
                             
                             <!-- Clear Filters Button -->
-                            <button id="clear-filters" class="w-full btn_outline btn-2 hover-outline-slide-down">
-                                <span class="!py-2">Clear All Filters</span>
+                            <button id="clear-filters" class="w-full btn_outline btn-2 btn_outline-small hover-outline-slide-down mb-3">
+                                <span>Clear All Filters</span>
+                            </button>
+                            
+                            <!-- New Search Button -->
+                            <button id="new-search" class="w-full btn btn-1 btn-small hover-filled-slide-down">
+                                <span>
+                                    <span id="new-search-text">New Search</span>
+                                    <svg id="new-search-spinner" class="hidden animate-spin h-4 w-4 inline-block ml-2" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </span>
                             </button>
                         </div>
                     </aside>
@@ -125,18 +136,29 @@
                                         Location
                                     </label>
                                     <div class="grid grid-cols-2 gap-3">
-                                        <button data-country="UK" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-700 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
+                                        <button data-country="UK" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
                                             UK
                                         </button>
-                                        <button data-country="IE" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 text-white text-sm font-medium transition-all hover:opacity-90 active" style="background-color: #102C46; border-color: #102C46;">
+                                        <button data-country="IE" class="country-btn-mobile px-4 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-dark_input text-gray-900 dark:text-gray-300 text-sm font-medium transition-all hover:border-[#102C46] hover:text-[#102C46]">
                                             Ireland
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <!-- Clear Filters Button -->
-                                <button id="clear-filters-mobile" class="w-full btn_outline btn-2 hover-outline-slide-down">
+                                <button id="clear-filters-mobile" class="w-full btn_outline btn-2 hover-outline-slide-down mb-3">
                                     <span class="!py-2">Clear All Filters</span>
+                                </button>
+                                
+                                <!-- New Search Button -->
+                                <button id="new-search-mobile" class="w-full btn btn-1 btn-small hover-filled-slide-down">
+                                    <span>
+                                        <span id="new-search-text-mobile">New Search</span>
+                                        <svg id="new-search-spinner-mobile" class="hidden animate-spin h-4 w-4 inline-block ml-2" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </span>
                                 </button>
                             </div>
                         </div>

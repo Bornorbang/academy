@@ -37,13 +37,21 @@ function setupEventListeners() {
     // Search input - Desktop
     const searchInput = document.getElementById('filter-name');
     if (searchInput) {
-        searchInput.addEventListener('input', debounce(applyFilters, 300));
+        searchInput.addEventListener('input', debounce(function() {
+            const searchInputMobile = document.getElementById('filter-name-mobile');
+            if (searchInputMobile) searchInputMobile.value = this.value || '';
+            applyFilters();
+        }, 300));
     }
     
     // Search input - Mobile
     const searchInputMobile = document.getElementById('filter-name-mobile');
     if (searchInputMobile) {
-        searchInputMobile.addEventListener('input', debounce(applyFilters, 300));
+        searchInputMobile.addEventListener('input', debounce(function() {
+            const searchInput = document.getElementById('filter-name');
+            if (searchInput) searchInput.value = this.value || '';
+            applyFilters();
+        }, 300));
     }
     
     // Level buttons - Desktop
@@ -169,7 +177,20 @@ function loadUniversities() {
     // Try to get search value from either desktop or mobile input
     const searchInput = document.getElementById('filter-name');
     const searchInputMobile = document.getElementById('filter-name-mobile');
-    const searchValue = searchInput ? searchInput.value : (searchInputMobile ? searchInputMobile.value : '');
+    
+    console.log('Desktop input:', searchInput, 'value:', searchInput?.value);
+    console.log('Mobile input:', searchInputMobile, 'value:', searchInputMobile?.value);
+    
+    // Get the value, handling undefined and empty strings properly
+    let searchValue = '';
+    if (searchInput && typeof searchInput.value === 'string' && searchInput.value.trim()) {
+        searchValue = searchInput.value.trim();
+    } else if (searchInputMobile && typeof searchInputMobile.value === 'string' && searchInputMobile.value.trim()) {
+        searchValue = searchInputMobile.value.trim();
+    }
+    
+    console.log('Final search value:', searchValue);
+    console.log('Active country:', activeCountry, 'Active level:', activeLevel);
     
     const params = new URLSearchParams({
         name: searchValue,
@@ -177,9 +198,12 @@ function loadUniversities() {
         level: activeLevel,
     });
     
+    console.log('API call params:', params.toString());
+    
     fetch(`/api/universities/?${params}`)
         .then(response => response.json())
         .then(data => {
+            console.log('API response:', data);
             allUniversities = data.universities;
             filteredUniversities = [...allUniversities];
             renderUniversities();

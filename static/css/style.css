@@ -103,6 +103,15 @@ body.dark {
   /* Outline Primary Button Hover End */
 }
 
+/* Small Button Variants for Filter Pages */
+.btn-small span {
+  @apply !py-2;
+}
+
+.btn_outline-small span {
+  @apply !py-2;
+}
+
 /* Slick Carousel Styles */
 .thumb .slick-list .slick-track{
     @apply !flex !items-center !gap-5;
