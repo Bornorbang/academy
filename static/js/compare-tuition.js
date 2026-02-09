@@ -188,20 +188,20 @@ async function handleFormSubmit(e) {
     const destination = formData.get('destination');
     const programme = formData.get('programme');
     
-    // Get subject code from input's dataset
+    // Get subject search term from input value (allow free text)
     const subjectInput = document.getElementById('subject');
-    const subjectCode = subjectInput.dataset.subjectCode;
+    const subjectSearch = subjectInput.value.trim();
     
     console.log('Form submission:', {
         residence,
         destination,
         programme,
-        subjectCode,
+        subjectSearch,
         subjectInputValue: subjectInput.value
     });
     
-    if (!subjectCode) {
-        alert('Please select a valid subject from the suggestions.');
+    if (!subjectSearch) {
+        alert('Please enter a subject or course name to search.');
         return;
     }
     
@@ -212,12 +212,12 @@ async function handleFormSubmit(e) {
     showLoading();
     
     try {
-        // Build query params
+        // Build query params - send the search term instead of subject code
         const params = new URLSearchParams({
             residence: residence,
             destination: destination,
             programme: programme,
-            subject: subjectCode
+            subject: subjectSearch
         });
         
         console.log('API URL:', `/api/compare-tuition/?${params}`);

@@ -13,7 +13,7 @@
             <!-- University {{ forloop.counter }} -->
             <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
                 <div class="relative">
-                    <img src="{{ university.banner }}" alt="{{ university.name }}" class="w-full h-48 object-cover" onerror="this.src='/static/images/mine/about-us.jpg'">
+                    <img src="{{ university.banner }}" alt="Compare Universities in UK & Ireland" class="w-full h-48 object-cover" onerror="this.src='/static/images/mine/about-us.jpg'">
                     <button class="absolute top-2 right-2 bg-white/90 dark:bg-secondary/90 p-2 rounded-full hover:bg-white dark:hover:bg-secondary transition-all favorite-btn" 
                             data-university-id="{{ university.university_id }}"
                             title="Add to favorites">
@@ -44,7 +44,7 @@
             <!-- University {{ forloop.counter }} Mobile -->
             <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg overflow-hidden shadow-lg grid grid-cols-12 gap-3 p-3" data-aos="fade-up">
                 <div class="col-span-3">
-                    <img src="{{ university.banner }}" alt="{{ university.name }}" class="w-full h-20 object-cover rounded-lg" onerror="this.src='/static/images/mine/about-us.jpg'">
+                    <img src="{{ university.banner }}" alt="Compare Universities in UK & Ireland" class="w-full h-20 object-cover rounded-lg" onerror="this.src='/static/images/mine/about-us.jpg'">
                 </div>
                 <div class="col-span-6 flex flex-col justify-center">
                     <h3 class="font-bold text-sm mb-1">{{ university.name }}</h3>

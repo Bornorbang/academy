@@ -59,7 +59,8 @@ def get_universities(request):
         
         # Count UG courses for this university
         ug_courses_count = uni.courses.filter(level='UG').count()
-        pg_courses_count = uni.courses.filter(level='PG').count()
+        # Count PG courses (include both PG and PGT)
+        pg_courses_count = uni.courses.filter(level__in=['PG', 'PGT']).count()
         
         # Get world ranking from UniversityRanking model
         world_ranking = None
@@ -142,7 +143,11 @@ def get_courses(request):
         courses = courses.filter(university__university_id=university_id)
     
     if level:
-        courses = courses.filter(level=level)
+        # For postgraduate, include both PG and PGT levels
+        if level == 'PG':
+            courses = courses.filter(level__in=['PG', 'PGT'])
+        else:
+            courses = courses.filter(level=level)
     
     if subject:
         courses = courses.filter(subject__icontains=subject)
@@ -315,10 +320,10 @@ def compare_tuition(request):
     residence_country = request.GET.get('residence', '').strip()
     dest_country = request.GET.get('destination', '').strip().upper()
     programme_type = request.GET.get('programme', '').strip().upper()
-    subject_code = request.GET.get('subject', '').strip().upper()
+    subject_search = request.GET.get('subject', '').strip()
     
     # Validate required parameters (residence not required for filtering)
-    if not all([dest_country, programme_type, subject_code]):
+    if not all([dest_country, programme_type, subject_search]):
         return JsonResponse({'error': 'Missing required parameters'}, status=400)
     
     # Map destination to country code
@@ -332,24 +337,26 @@ def compare_tuition(request):
     # Determine residency status (International is most common for comparison)
     residency = 'INTL'
     
-    # Query courses matching the criteria
+    # Query courses matching the criteria using course title instead of subject code
     # For postgraduate, include both PG and PGT levels
     if level == 'PG':
         courses = Course.objects.filter(
             university__country=country,
-            level__in=['PG', 'PGT'],
-            subject__subject_code=subject_code
+            level__in=['PG', 'PGT']
         ).select_related('university', 'subject').prefetch_related('tuitions')
     else:
         courses = Course.objects.filter(
             university__country=country,
-            level=level,
-            subject__subject_code=subject_code
+            level=level
         ).select_related('university', 'subject').prefetch_related('tuitions')
+    
+    # Filter courses by title match (case-insensitive)
+    subject_lower = subject_search.lower()
+    matching_courses = [course for course in courses if subject_lower in course.title.lower()]
     
     # Prepare comparison data
     results = []
-    for course in courses:
+    for course in matching_courses:
         # Get tuition for international students
         tuition = course.tuitions.filter(residency=residency).first()
         
@@ -385,7 +392,7 @@ def compare_tuition(request):
         'filters': {
             'country': country,
             'level': level,
-            'subject': subject_code,
+            'subject': subject_search,
             'residency': residency
         }
     })
