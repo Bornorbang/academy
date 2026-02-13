@@ -3,17 +3,19 @@ let scholarshipsData = [];
 let universitiesData = {};
 let currentDisplayCount = 20;
 let filteredScholarships = [];
+let isProgressiveLoading = false;
 
 // Load scholarships data
 async function loadScholarships() {
     showLoading();
+    isProgressiveLoading = true;
     
     try {
-        // Fetch all scholarships from the database
-        const allScholarships = [];
+        scholarshipsData = [];
+        let loadedCount = 0;
+        let firstBatchLoaded = false;
         
-        // We need to fetch scholarships for all universities
-        // Since the API requires university_id, we'll fetch from all universities
+        // Fetch universities first
         const universitiesResponse = await fetch('/api/universities/');
         
         if (!universitiesResponse.ok) {
@@ -26,38 +28,57 @@ async function loadScholarships() {
             throw new Error('No universities found');
         }
         
-        // Fetch scholarships for each university
-        const scholarshipPromises = universitiesData.universities.map(university => 
+        const totalUniversities = universitiesData.universities.length;
+        
+        // Fetch scholarships for each university - stream results as they arrive
+        const fetchPromises = universitiesData.universities.map(university => 
             fetch(`/api/scholarships/?university_id=${university.university_id}`)
                 .then(res => res.ok ? res.json() : { scholarships: [] })
-                .catch(() => ({ scholarships: [] }))
+                .then(data => {
+                    if (data.scholarships && Array.isArray(data.scholarships) && data.scholarships.length > 0) {
+                        scholarshipsData.push(...data.scholarships);
+                        loadedCount++;
+                        
+                        // Show first batch immediately after first successful fetch
+                        if (!firstBatchLoaded) {
+                            firstBatchLoaded = true;
+                            hideLoading();
+                            displayScholarships(scholarshipsData, false, true);
+                        } else {
+                            // Update display with new scholarships as they arrive
+                            displayScholarships(scholarshipsData, false, false);
+                        }
+                        
+                        // Update loading message
+                        updateLoadingProgress(loadedCount, totalUniversities);
+                    }
+                })
+                .catch(err => {
+                    console.error(`Error fetching scholarships for ${university.university_id}:`, err);
+                    return { scholarships: [] };
+                })
         );
         
-        const results = await Promise.all(scholarshipPromises);
+        // Wait for all fetches to complete
+        await Promise.all(fetchPromises);
         
-        results.forEach(data => {
-            if (data.scholarships && Array.isArray(data.scholarships)) {
-                allScholarships.push(...data.scholarships);
-            }
-        });
+        console.log(`Loaded ${scholarshipsData.length} scholarships from ${loadedCount} universities`);
         
-        scholarshipsData = allScholarships;
-        console.log(`Loaded ${scholarshipsData.length} scholarships`);
+        isProgressiveLoading = false;
         
-        hideLoading();
-        
-        // Populate filters
-        populateFilters();
-        
-        // Display scholarships
+        // Final display
         if (scholarshipsData.length > 0) {
+            hideLoading();
+            populateFilters();
             displayScholarships(scholarshipsData);
         } else {
+            hideLoading();
             showNoResults();
         }
         
     } catch (error) {
         console.error('Error loading scholarships:', error);
+        isProgressiveLoading = false;
         hideLoading();
         showError('Failed to load scholarships. Please refresh the page.');
     }
@@ -124,7 +145,7 @@ function populateFilters() {
 }
 
 // Display scholarships
-function displayScholarships(scholarships, append = false) {
+function displayScholarships(scholarships, append = false, firstBatch = false) {
     const grid = document.getElementById('scholarships-grid');
     const noResults = document.getElementById('no-results');
     const resultsCount = document.getElementById('results-count');
@@ -133,7 +154,7 @@ function displayScholarships(scholarships, append = false) {
     if (!grid) return;
     
     // Store filtered scholarships for Load More
-    if (!append) {
+    if (!append && !firstBatch) {
         filteredScholarships = scholarships;
         currentDisplayCount = 20;
         grid.innerHTML = '';
@@ -151,14 +172,45 @@ function displayScholarships(scholarships, append = false) {
     noResults.classList.add('hidden');
     resultsCount.textContent = scholarships.length;
     
-    // Display scholarships up to currentDisplayCount
-    const toDisplay = append ? scholarships.slice(currentDisplayCount - 20, currentDisplayCount) : scholarships.slice(0, currentDisplayCount);
-    
-    toDisplay.forEach((scholarship, index) => {
-        const actualIndex = append ? currentDisplayCount - 20 + index : index;
-        const card = createScholarshipCard(scholarship, actualIndex);
-        grid.appendChild(card);
-    });
+    // For progressive loading, show all current scholarships
+    if (firstBatch) {
+        filteredScholarships = scholarships;
+        currentDisplayCount = Math.min(20, scholarships.length);
+        grid.innerHTML = '';
+        const toDisplay = scholarships.slice(0, currentDisplayCount);
+        toDisplay.forEach((scholarship, index) => {
+            const card = createScholarshipCard(scholarship, index);
+            grid.appendChild(card);
+        });
+        // Refresh AOS for new elements
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+    } else if (!append) {
+        // Normal display (after filtering or complete load)
+        const toDisplay = scholarships.slice(0, currentDisplayCount);
+        grid.innerHTML = '';
+        toDisplay.forEach((scholarship, index) => {
+            const card = createScholarshipCard(scholarship, index);
+            grid.appendChild(card);
+        });
+        // Refresh AOS for new elements
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+    } else {
+        // Append more (Load More button)
+        const toDisplay = scholarships.slice(currentDisplayCount - 20, currentDisplayCount);
+        toDisplay.forEach((scholarship, index) => {
+            const actualIndex = currentDisplayCount - 20 + index;
+            const card = createScholarshipCard(scholarship, actualIndex);
+            grid.appendChild(card);
+        });
+        // Refresh AOS for new elements
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+    }
     
     // Show/hide Load More button
     if (loadMoreContainer) {
@@ -174,8 +226,11 @@ function displayScholarships(scholarships, append = false) {
 function createScholarshipCard(scholarship, index) {
     const card = document.createElement('div');
     card.className = 'bg-white/80 backdrop-blur-md dark:bg-dark_card/80 rounded-22 p-6 shadow-round-box';
-    card.setAttribute('data-aos', 'fade-up');
-    card.setAttribute('data-aos-delay', (index % 4) * 100);
+    // Only add AOS animation when not progressively loading
+    if (!isProgressiveLoading) {
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', (index % 4) * 100);
+    }
     
     // Get university name from scholarship data
     const universityName = scholarship.university_name || 'Various Universities';
@@ -329,10 +384,28 @@ function showLoading() {
     const grid = document.getElementById('scholarships-grid');
     const noResults = document.getElementById('no-results');
     
-    if (spinner) spinner.classList.remove('hidden');
+    if (spinner) {
+        spinner.classList.remove('hidden');
+        // Update message for progressive loading
+        const message = spinner.querySelector('p');
+        if (message) {
+            message.textContent = 'Loading scholarships...';
+        }
+    }
     if (resultsSection) resultsSection.classList.add('hidden');
     if (grid) grid.classList.add('hidden');
     if (noResults) noResults.classList.add('hidden');
+}
+
+// Update loading progress message
+function updateLoadingProgress(loaded, total) {
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner && !spinner.classList.contains('hidden')) {
+        const message = spinner.querySelector('p');
+        if (message) {
+            message.textContent = `Loading scholarships... (${loaded}/${total} sources)`;
+        }
+    }
 }
 
 // Hide loading state
