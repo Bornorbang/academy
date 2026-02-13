@@ -6,6 +6,8 @@ let filteredScholarships = [];
 
 // Load scholarships data
 async function loadScholarships() {
+    showLoading();
+    
     try {
         // Fetch all scholarships from the database
         const allScholarships = [];
@@ -13,28 +15,51 @@ async function loadScholarships() {
         // We need to fetch scholarships for all universities
         // Since the API requires university_id, we'll fetch from all universities
         const universitiesResponse = await fetch('/api/universities/');
+        
+        if (!universitiesResponse.ok) {
+            throw new Error('Failed to fetch universities');
+        }
+        
         const universitiesData = await universitiesResponse.json();
         
-        // Fetch scholarships for each university
-        for (const university of universitiesData.universities) {
-            const response = await fetch(`/api/scholarships/?university_id=${university.university_id}`);
-            const data = await response.json();
-            allScholarships.push(...data.scholarships);
+        if (!universitiesData.universities || universitiesData.universities.length === 0) {
+            throw new Error('No universities found');
         }
+        
+        // Fetch scholarships for each university
+        const scholarshipPromises = universitiesData.universities.map(university => 
+            fetch(`/api/scholarships/?university_id=${university.university_id}`)
+                .then(res => res.ok ? res.json() : { scholarships: [] })
+                .catch(() => ({ scholarships: [] }))
+        );
+        
+        const results = await Promise.all(scholarshipPromises);
+        
+        results.forEach(data => {
+            if (data.scholarships && Array.isArray(data.scholarships)) {
+                allScholarships.push(...data.scholarships);
+            }
+        });
         
         scholarshipsData = allScholarships;
         console.log(`Loaded ${scholarshipsData.length} scholarships`);
-        console.log('First scholarship:', scholarshipsData[0]); // Debug log
+        
+        hideLoading();
         
         // Populate filters
         populateFilters();
         
         // Display scholarships
-        displayScholarships(scholarshipsData);
+        if (scholarshipsData.length > 0) {
+            displayScholarships(scholarshipsData);
+        } else {
+            showNoResults();
+        }
         
     } catch (error) {
         console.error('Error loading scholarships:', error);
-        showNoResults();
+        hideLoading();
+        showError('Failed to load scholarships. Please refresh the page.');
     }
 }
 
@@ -297,14 +322,67 @@ function formatLevel(level) {
     return levels[level] || level;
 }
 
+// Show loading state
+function showLoading() {
+    const spinner = document.getElementById('loading-spinner');
+    const resultsSection = document.getElementById('results-section');
+    const grid = document.getElementById('scholarships-grid');
+    const noResults = document.getElementById('no-results');
+    
+    if (spinner) spinner.classList.remove('hidden');
+    if (resultsSection) resultsSection.classList.add('hidden');
+    if (grid) grid.classList.add('hidden');
+    if (noResults) noResults.classList.add('hidden');
+}
+
+// Hide loading state
+function hideLoading() {
+    const spinner = document.getElementById('loading-spinner');
+    const resultsSection = document.getElementById('results-section');
+    
+    if (spinner) spinner.classList.add('hidden');
+    if (resultsSection) resultsSection.classList.remove('hidden');
+}
+
+// Show error message
+function showError(message) {
+    const grid = document.getElementById('scholarships-grid');
+    const noResults = document.getElementById('no-results');
+    const resultsSection = document.getElementById('results-section');
+    
+    if (grid) grid.classList.add('hidden');
+    if (resultsSection) resultsSection.classList.add('hidden');
+    if (noResults) {
+        noResults.innerHTML = `
+            <svg class="w-24 h-24 mx-auto text-red-400 dark:text-red-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h3 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2">Error Loading Scholarships</h3>
+            <p class="text-gray-600 dark:text-gray-400">${message}</p>
+        `;
+        noResults.classList.remove('hidden');
+    }
+}
+
 // Show no results message
 function showNoResults() {
     const grid = document.getElementById('scholarships-grid');
     const noResults = document.getElementById('no-results');
     const resultsCount = document.getElementById('results-count');
+    const resultsSection = document.getElementById('results-section');
     
     if (grid) grid.classList.add('hidden');
-    if (noResults) noResults.classList.remove('hidden');
+    if (resultsSection) resultsSection.classList.remove('hidden');
+    if (noResults) {
+        noResults.innerHTML = `
+            <svg class="w-24 h-24 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h3 class="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-2">No Scholarships Found</h3>
+            <p class="text-gray-600 dark:text-gray-400">Try adjusting your filters or search terms</p>
+        `;
+        noResults.classList.remove('hidden');
+    }
     if (resultsCount) resultsCount.textContent = '0';
 }
 

@@ -65,14 +65,23 @@
                     </div>
                 </div>
                 
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" class="text-center py-12">
+                    <svg class="animate-spin h-16 w-16 mx-auto text-primary mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="text-gray-700 dark:text-gray-300 text-lg font-semibold">Loading scholarships...</p>
+                </div>
+                
                 <!-- Results Count -->
-                <div class="mb-6">
+                <div id="results-section" class="mb-6 hidden">
                     <p class="text-gray-700 dark:text-gray-300">
                         Showing <span id="results-count" class="font-bold">0</span> scholarships
                     </p>
                 </div>
                 
-                <div class="grid md:grid-cols-3 gap-6" id="scholarships-grid">
+                <div class="grid md:grid-cols-3 gap-6 hidden" id="scholarships-grid">
                     <!-- Scholarship cards will be loaded here dynamically -->
                 </div>
                 
