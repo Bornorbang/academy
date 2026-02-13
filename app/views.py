@@ -110,7 +110,8 @@ def get_scholarships(request):
     for scholarship in scholarships:
         data.append({
             'name': scholarship.name,
-            'level': scholarship.get_level_display(),
+            'level': scholarship.level,  # Return actual value (UG/PG) not display name
+            'level_display': scholarship.get_level_display(),  # Keep display name for UI
             'eligibility': scholarship.eligibility,
             'award_type': scholarship.award_type,
             'award_value': scholarship.award_value,
