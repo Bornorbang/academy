@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,6 +23,7 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', views.home, name='home'),
     path('find-course/', TemplateView.as_view(template_name='find-course.html'), name='find-course'),
     path('course-search/', views.course_search_page, name='course-search'),
@@ -48,7 +49,10 @@ urlpatterns = [
     path('terms/', TemplateView.as_view(template_name='terms.html'), name='terms'),
     path('faq/', TemplateView.as_view(template_name='faq.html'), name='faq'),
     path('contact-us/', views.contact_us, name='contact-us'),
+    path('blog/', views.blog_list, name='blog-list'),
+    path('blog/<slug:slug>/', views.blog_detail, name='blog-detail'),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

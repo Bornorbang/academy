@@ -118,12 +118,22 @@
                     <h2 class="text-32 mb-4">Tuition Fee Comparison</h2>
                     <div class="flex flex-wrap gap-4 items-center justify-between">
                         <p class="text-SlateBlueText dark:text-opacity-80" id="comparison-count">0 universities found</p>
-                        <div>
-                            <label for="sort-by" class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Sort by:</label>
-                            <select id="sort-by" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
-                                <option value="lowest">Lowest Fee</option>
-                                <option value="highest">Highest Fee</option>
-                            </select>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <div>
+                                <label for="level-filter" class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Level:</label>
+                                <select id="level-filter" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="">All Levels</option>
+                                    <option value="TOPUP">Top-up</option>
+                                    <option value="MRES">MRes</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="sort-by" class="text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Sort by:</label>
+                                <select id="sort-by" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-dark_input dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option value="lowest">Lowest Fee</option>
+                                    <option value="highest">Highest Fee</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -105,11 +105,11 @@ body.dark {
 
 /* Small Button Variants for Filter Pages */
 .btn-small span {
-  @apply !py-2;
+  @apply !py-2 !px-5 !text-xs;
 }
 
 .btn_outline-small span {
-  @apply !py-2;
+  @apply !py-2 !px-5 !text-xs;
 }
 
 /* Slick Carousel Styles */

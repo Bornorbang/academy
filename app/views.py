@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from .models import University, Course, Scholarship, Subject
+from .models import University, Course, Scholarship, Subject, BlogPost
 from django.db.models import Q, Count
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
+from django.core.paginator import Paginator
 import random
 from difflib import SequenceMatcher
 
@@ -332,20 +333,35 @@ def compare_tuition(request):
     country = country_map.get(dest_country, dest_country)
     
     # Map programme type to level (need to handle both PG and PGT for postgraduate)
-    level_map = {'UNDERGRADUATE': 'UG', 'POSTGRADUATE': 'PG', 'UG': 'UG', 'PG': 'PG'}
+    level_map = {
+        'UNDERGRADUATE': 'UG', 
+        'POSTGRADUATE': 'PG', 
+        'UG': 'UG', 
+        'PG': 'PG',
+        'TOPUP': 'TOPUP',
+        'TOP-UP': 'TOPUP',
+        'MRES': 'MRES'
+    }
     level = level_map.get(programme_type, programme_type)
     
     # Determine residency status (International is most common for comparison)
     residency = 'INTL'
     
     # Query courses matching the criteria using course title instead of subject code
-    # For postgraduate, include both PG and PGT levels
+    # For postgraduate, include PG, PGT, and MRES levels
+    # For undergraduate, include UG and TOPUP levels
     if level == 'PG':
         courses = Course.objects.filter(
             university__country=country,
-            level__in=['PG', 'PGT']
+            level__in=['PG', 'PGT', 'MRES']
+        ).select_related('university', 'subject').prefetch_related('tuitions')
+    elif level == 'UG':
+        courses = Course.objects.filter(
+            university__country=country,
+            level__in=['UG', 'TOPUP']
         ).select_related('university', 'subject').prefetch_related('tuitions')
     else:
+        # For TOPUP, MRES - match the exact level
         courses = Course.objects.filter(
             university__country=country,
             level=level
@@ -372,6 +388,7 @@ def compare_tuition(request):
                 'university_slug': course.university.slug,
                 'course_title': course.title,
                 'course_id': course.course_id,
+                'course_level': course.level,  # Add course level for filtering
                 'tuition_fee': float(tuition.tuition_fee),
                 'scholarship': float(tuition.scholarship) if tuition.scholarship else 0,
                 'net_tuition': float(tuition.net_tuition_fee),
@@ -492,3 +509,55 @@ This email was sent from the University Tuition Compare contact form.
     
     # GET request - just render the form
     return render(request, 'contact-us.html')
+
+def blog_list(request):
+    """Render the blog list page"""
+    # Get all published blog posts
+    posts = BlogPost.objects.filter(status='published').order_by('-published_at')
+    
+    # Pagination - 9 posts per page
+    paginator = Paginator(posts, 9)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, 'blog-list.html', context)
+
+def blog_detail(request, slug):
+    """Render the blog detail page"""
+    from .models import Comment
+    post = get_object_or_404(BlogPost, slug=slug, status='published')
+    
+    # Handle comment submission
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        comment_text = request.POST.get('comment')
+        
+        if name and email and comment_text:
+            Comment.objects.create(
+                post=post,
+                name=name,
+                email=email,
+                comment=comment_text,
+                is_approved=False
+            )
+            from django.contrib import messages
+            messages.success(request, 'Your comment has been submitted and is awaiting approval.')
+            return redirect('blog-detail', slug=slug)
+    
+    # Increment view count
+    post.views += 1
+    post.save(update_fields=['views'])
+    
+    # Get approved comments
+    approved_comments = post.comments.filter(is_approved=True).order_by('-created_at')
+    
+    context = {
+        'post': post,
+        'approved_comments': approved_comments,
+    }
+    return render(request, 'blog-detail.html', context)
+

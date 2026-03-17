@@ -32,6 +32,7 @@ let currencySymbols = {
 let userCurrency = 'GBP';
 let userCurrencySymbol = '£';
 let debounceTimer;
+let allResultsUnfiltered = []; // Store original results before filtering
 
 document.addEventListener('DOMContentLoaded', function() {
     // Setup form submission
@@ -45,6 +46,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (sortDropdown) {
         sortDropdown.addEventListener('change', function() {
             sortResults(this.value);
+        });
+    }
+    
+    // Setup level filter dropdown
+    const levelFilter = document.getElementById('level-filter');
+    if (levelFilter) {
+        levelFilter.addEventListener('change', function() {
+            filterResultsByLevel(this.value);
         });
     }
     
@@ -230,8 +239,20 @@ async function handleFormSubmit(e) {
         
         const data = await response.json();
         console.log('API Response:', data);
+        console.log('Number of results:', data.results ? data.results.length : 0);
         
         allResults = data.results || [];
+        allResultsUnfiltered = [...allResults]; // Store original results
+        
+        console.log('Stored in allResultsUnfiltered:', allResultsUnfiltered.length);
+        console.log('Sample course levels:', allResultsUnfiltered.slice(0, 5).map(r => r.course_level));
+        
+        // Reset level filter when new search is performed
+        const levelFilter = document.getElementById('level-filter');
+        if (levelFilter) {
+            levelFilter.value = '';
+            console.log('Level filter reset to empty');
+        }
         
         if (allResults.length === 0) {
             showNoResults();
@@ -457,4 +478,49 @@ function sortResults(sortBy) {
     }
     
     displayResults(allResults);
+}
+
+// Filter results by level
+function filterResultsByLevel(level) {
+    console.log('=== FILTER DEBUG ===');
+    console.log('Filter level selected:', level);
+    console.log('allResultsUnfiltered length:', allResultsUnfiltered.length);
+    
+    if (!level) {
+        // If no level selected, show all results
+        allResults = [...allResultsUnfiltered];
+        console.log('No filter - showing all results');
+    } else {
+        // Filter results by the selected level
+        console.log('Filtering for level:', level);
+        
+        // Sample the first few courses to see what we're working with
+        console.log('Sample course_level values from first 3 courses:');
+        allResultsUnfiltered.slice(0, 3).forEach((r, i) => {
+            console.log(`  Course ${i+1}: "${r.course_level}"`);
+        });
+        
+        allResults = allResultsUnfiltered.filter(result => {
+            return result.course_level && result.course_level.toUpperCase() === level.toUpperCase();
+        });
+        
+        console.log('Filtered results count:', allResults.length);
+    }
+    
+    // Check if filter returned no results
+    if (allResults.length === 0) {
+        console.log('⚠️ No results after filtering - showing no results message');
+        showNoResults();
+        return;
+    }
+    
+    console.log('✅ Displaying', allResults.length, 'filtered results');
+    
+    // Apply current sort
+    const sortDropdown = document.getElementById('sort-by');
+    if (sortDropdown) {
+        sortResults(sortDropdown.value);
+    } else {
+        displayResults(allResults);
+    }
 }
