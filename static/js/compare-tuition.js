@@ -41,19 +41,20 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', handleFormSubmit);
     }
     
-    // Setup sort dropdown
-    const sortDropdown = document.getElementById('sort-by');
-    if (sortDropdown) {
-        sortDropdown.addEventListener('change', function() {
-            sortResults(this.value);
-        });
-    }
-    
     // Setup level filter dropdown
     const levelFilter = document.getElementById('level-filter');
     if (levelFilter) {
         levelFilter.addEventListener('change', function() {
             filterResultsByLevel(this.value);
+        });
+    }
+    
+    // Setup level filter search button
+    const levelSearchBtn = document.getElementById('level-search-btn');
+    if (levelSearchBtn && levelFilter) {
+        levelSearchBtn.addEventListener('click', function() {
+            const selectedLevel = levelFilter.value;
+            filterResultsByLevel(selectedLevel);
         });
     }
     
@@ -516,11 +517,7 @@ function filterResultsByLevel(level) {
     
     console.log('✅ Displaying', allResults.length, 'filtered results');
     
-    // Apply current sort
-    const sortDropdown = document.getElementById('sort-by');
-    if (sortDropdown) {
-        sortResults(sortDropdown.value);
-    } else {
-        displayResults(allResults);
-    }
+    // Sort by lowest fee (default)
+    allResults.sort((a, b) => a.net_tuition - b.net_tuition);
+    displayResults(allResults);
 }

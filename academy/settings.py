@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-siqql)n4u#p@i$c)1rj*grz-u+j6#bw&$j4=$biy9*5e(9v3(%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['universitytuitioncompare.com', 'www.universitytuitioncompare.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -154,5 +154,3 @@ CKEDITOR_CONFIGS = {
         ],
     },
 }
-DEFAULT_FROM_EMAIL = 'University Tuition Compare <info@mg.universitytuitioncompare.com>'
-CONTACT_EMAIL = 'info@universitytuitioncompare.com'  

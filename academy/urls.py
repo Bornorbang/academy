@@ -53,6 +53,8 @@ urlpatterns = [
     path('blog/<slug:slug>/', views.blog_detail, name='blog-detail'),
 ]
 
+# Always serve media files (needed for production)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
