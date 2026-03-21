@@ -1,19 +1,10 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ course.title }} - {{ course.university.name }} | University Tuition Compare</title>
-    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
-    <link href="{% static 'css/output.css' %}" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-</head>
-<body class="overflow-x-hidden dark:bg-darkmode">
-    {% include 'partials/header.html' %}
-    
-    <main class="pt-24">
+
+{% block title %}<title>{{ course.title }} - {{ course.university.name }} | University Tuition Compare</title>{% endblock %}
+
+{% block content %}
+    <div class="pt-24">
         <!-- Course Banner -->
         <section class="relative h-[300px] lg:h-[400px]">
             <!-- Banner Image with Opacity Overlay -->
@@ -294,17 +285,15 @@
                 {% endif %}
             </div>
         </section>
-    </main>
-    
-    {% include 'partials/footer.html' %}
-    
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 50
-        });
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 50
+    });
         
         // Tab functionality for Course Details (Requirements/Modules)
         const requirementsTab = document.getElementById('requirements-tab');
@@ -376,5 +365,4 @@
             });
         }
     </script>
-</body>
-</html>
+{% endblock %}

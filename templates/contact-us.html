@@ -1,27 +1,10 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - University Tuition Compare</title>
-    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
-    
-    <!-- Tailwind CSS -->
-    <link href="{% static 'css/output.css' %}" rel="stylesheet">
-    
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    
-    <!-- Custom Styles -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-</head>
-<body class="overflow-x-hidden dark:bg-darkmode">
-    
-    <!-- Header -->
-    {% include 'partials/header.html' %}
-    
-    <main class="pt-24">
+
+{% block title %}<title>Contact Us - University Tuition Compare</title>{% endblock %}
+
+{% block content %}
+    <div class="pt-24"></div>
         <!-- Hero Section -->
         <section style="background-color: #102C46;" class="relative overflow-hidden py-16 md:py-20">
             <div class="container">
@@ -166,29 +149,23 @@
                 </div>
             </div>
         </section>
-    </main>
+{% endblock %}
 
-    <!-- Footer -->
-    {% include 'partials/footer.html' %}
-
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-    <script>
-        // Contact form loading spinner
-        document.getElementById('contact-form')?.addEventListener('submit', function() {
-            const submitBtn = document.getElementById('submit-btn');
-            const sendIcon = document.getElementById('send-icon');
-            const spinner = document.getElementById('spinner');
-            const btnText = document.getElementById('btn-text');
-            
-            if (submitBtn && sendIcon && spinner && btnText) {
-                submitBtn.disabled = true;
-                sendIcon.classList.add('hidden');
-                spinner.classList.remove('hidden');
-                btnText.textContent = 'Sending...';
-            }
-        });
-    </script>
-</body>
-</html>
+{% block extra_js %}
+<script>
+    // Contact form loading spinner
+    document.getElementById('contact-form')?.addEventListener('submit', function() {
+        const submitBtn = document.getElementById('submit-btn');
+        const sendIcon = document.getElementById('send-icon');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btn-text');
+        
+        if (submitBtn && sendIcon && spinner && btnText) {
+            submitBtn.disabled = true;
+            sendIcon.classList.add('hidden');
+            spinner.classList.remove('hidden');
+            btnText.textContent = 'Sending...';
+        }
+    });
+</script>
+{% endblock %}

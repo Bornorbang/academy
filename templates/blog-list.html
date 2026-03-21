@@ -1,38 +1,32 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Latest University & Education Articles | University Tuition Compare</title>
-    <meta name="description" content="Stay updated with the latest articles, guides, and insights about studying in the UK and Ireland. Expert advice on university selection, courses, tuition fees, and scholarships.">
-    <meta name="keywords" content="university blog, study in UK, study in Ireland, university guides, education articles, tuition fees, scholarships">
-    <meta name="author" content="University Tuition Compare">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{{ request.path }}">
-    <meta property="og:title" content="Blog - University Tuition Compare">
-    <meta property="og:description" content="Latest articles and insights about studying in the UK and Ireland">
-    <meta property="og:image" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{% static 'images/mine/university compare.png' %}">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{{ request.path }}">
-    <meta property="twitter:title" content="Blog - University Tuition Compare">
-    <meta property="twitter:description" content="Latest articles and insights about studying in the UK and Ireland">
-    <meta property="twitter:image" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{% static 'images/mine/university compare.png' %}">
-    
-    <link rel="canonical" href="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{{ request.path }}">
-    <link rel="icon" href="{% static 'images/mine/compare-favicon.png' %}" type="image/png">
-    <link href="{% static 'css/output.css' %}" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-</head>
-<body class="overflow-x-hidden dark:bg-darkmode">
-    {% include 'partials/header.html' %}
-    
-    <main class="pt-24">
+
+{% block title %}<title>Blog - Latest University & Education Articles | University Tuition Compare</title>{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Stay updated with the latest articles, guides, and insights about studying in the UK and Ireland. Expert advice on university selection, courses, tuition fees, and scholarships.">
+<meta name="keywords" content="university blog, study in UK, study in Ireland, university guides, education articles, tuition fees, scholarships">
+<meta name="author" content="University Tuition Compare">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{{ request.path }}">
+<meta property="og:title" content="Blog - University Tuition Compare">
+<meta property="og:description" content="Latest articles and insights about studying in the UK and Ireland">
+<meta property="og:image" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{% static 'images/mine/university compare.png' %}">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{{ request.path }}">
+<meta property="twitter:title" content="Blog - University Tuition Compare">
+<meta property="twitter:description" content="Latest articles and insights about studying in the UK and Ireland">
+<meta property="twitter:image" content="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{% static 'images/mine/university compare.png' %}">
+
+<link rel="canonical" href="{{ request.scheme }}://www.{{ request.get_host|cut:'www.' }}{{ request.path }}">
+{% endblock %}
+
+{% block content %}
+    <div class="pt-24"></div>
         <!-- Hero Section -->
         <section style="background-color: #102C46;" class="relative overflow-hidden py-12 md:py-16">
             <div class="container">
@@ -136,17 +130,4 @@
                     </div>
                 </div>
         </section>
-    </main>
-    
-    {% include 'partials/footer.html' %}
-    
-    <button id="scroll-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-all duration-300 z-50">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-        </svg>
-    </button>
-    
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-</body>
-</html>
+{% endblock %}
