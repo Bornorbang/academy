@@ -33,6 +33,7 @@ urlpatterns = [
     path('courses/degrees/postgraduate/<str:course>/', TemplateView.as_view(template_name='course-results.html'), name='postgraduate-courses'),
     path('compare-tuition/', TemplateView.as_view(template_name='compare-tuition.html'), name='compare-tuition'),
     path('api/compare-tuition/', views.compare_tuition, name='api-compare-tuition'),
+    path('api/exchange-rates/', views.get_exchange_rates, name='api-exchange-rates'),
     path('compare-rankings/', views.compare_rankings, name='compare-rankings'),
     path('api/rankings/', views.get_rankings, name='get-rankings'),
     path('university-search/', views.university_search, name='university-search'),

@@ -259,5 +259,40 @@ class Comment(models.Model):
         return f'Comment by {self.name} on {self.post.title}'
 
 
+class ExchangeRate(models.Model):
+    CURRENCY_CHOICES = [
+        ('GBP', 'British Pound (£)'),
+        ('EUR', 'Euro (€)'),
+        ('USD', 'US Dollar ($)'),
+        ('NGN', 'Nigerian Naira (₦)'),
+        ('GHS', 'Ghanaian Cedi (₵)'),
+        ('KES', 'Kenyan Shilling (KSh)'),
+        ('ZAR', 'South African Rand (R)'),
+        ('INR', 'Indian Rupee (₹)'),
+        ('CNY', 'Chinese Yuan (¥)'),
+        ('PKR', 'Pakistani Rupee (Rs)'),
+        ('BDT', 'Bangladeshi Taka (৳)'),
+    ]
+    
+    currency_code = models.CharField(max_length=3, choices=CURRENCY_CHOICES, unique=True)
+    currency_name = models.CharField(max_length=100)
+    currency_symbol = models.CharField(max_length=10)
+    rate_to_gbp = models.DecimalField(
+        max_digits=10, 
+        decimal_places=4,
+        help_text="Exchange rate relative to 1 GBP (e.g., if 1 GBP = 1.27 USD, enter 1.27)"
+    )
+    is_active = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['currency_code']
+        verbose_name = 'Exchange Rate'
+        verbose_name_plural = 'Exchange Rates'
+    
+    def __str__(self):
+        return f"{self.currency_code} - {self.currency_name} (1 GBP = {self.rate_to_gbp} {self.currency_code})"
+
+
 
 

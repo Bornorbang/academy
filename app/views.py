@@ -561,3 +561,21 @@ def blog_detail(request, slug):
     }
     return render(request, 'blog-detail.html', context)
 
+
+def get_exchange_rates(request):
+    """API endpoint to fetch active exchange rates"""
+    from .models import ExchangeRate
+    
+    rates = ExchangeRate.objects.filter(is_active=True)
+    
+    data = {
+        'rates': {},
+        'symbols': {}
+    }
+    
+    for rate in rates:
+        data['rates'][rate.currency_code] = float(rate.rate_to_gbp)
+        data['symbols'][rate.currency_code] = rate.currency_symbol
+    
+    return JsonResponse(data)
+

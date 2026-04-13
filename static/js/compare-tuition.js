@@ -1,73 +1,97 @@
 // Compare Tuition Fee Functionality
 
 let allResults = [];
-let exchangeRates = {
-    'GBP': 1,
-    'EUR': 1.17,
-    'NGN': 1850, // Nigerian Naira
-    'GHS': 15.5, // Ghanaian Cedi
-    'KES': 190, // Kenyan Shilling
-    'ZAR': 23, // South African Rand
-    'USD': 1.27, // US Dollar
-    'INR': 106, // Indian Rupee
-    'CNY': 9.2, // Chinese Yuan
-    'PKR': 353, // Pakistani Rupee
-    'BDT': 140, // Bangladeshi Taka
-};
-
-let currencySymbols = {
-    'GBP': '£',
-    'EUR': '€',
-    'NGN': '₦',
-    'GHS': '₵',
-    'KES': 'KSh',
-    'ZAR': 'R',
-    'USD': '$',
-    'INR': '₹',
-    'CNY': '¥',
-    'PKR': 'Rs',
-    'BDT': '৳',
-};
-
+let exchangeRates = {};
+let currencySymbols = {};
 let userCurrency = 'GBP';
 let userCurrencySymbol = '£';
 let debounceTimer;
 let allResultsUnfiltered = []; // Store original results before filtering
 
+// Fetch exchange rates from the API on page load
+async function loadExchangeRates() {
+    try {
+        const response = await fetch('/api/exchange-rates/');
+        const data = await response.json();
+        exchangeRates = data.rates;
+        currencySymbols = data.symbols;
+        
+        // Ensure GBP is always in the rates
+        if (!exchangeRates['GBP']) {
+            exchangeRates['GBP'] = 1;
+            currencySymbols['GBP'] = '£';
+        }
+        
+        console.log('Exchange rates loaded:', exchangeRates);
+    } catch (error) {
+        console.error('Error loading exchange rates:', error);
+        // Fallback to default rates if API fails
+        exchangeRates = {
+            'GBP': 1,
+            'EUR': 1.17,
+            'NGN': 1850,
+            'GHS': 15.5,
+            'KES': 190,
+            'ZAR': 23,
+            'USD': 1.27,
+            'INR': 106,
+            'CNY': 9.2,
+            'PKR': 353,
+            'BDT': 140,
+        };
+        currencySymbols = {
+            'GBP': '£',
+            'EUR': '€',
+            'NGN': '₦',
+            'GHS': '₵',
+            'KES': 'KSh',
+            'ZAR': 'R',
+            'USD': '$',
+            'INR': '₹',
+            'CNY': '¥',
+            'PKR': 'Rs',
+            'BDT': '৳',
+        };
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Setup form submission
-    const form = document.getElementById('tuition-compare-form');
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
-    
-    // Setup level filter dropdown
-    const levelFilter = document.getElementById('level-filter');
-    if (levelFilter) {
-        levelFilter.addEventListener('change', function() {
-            filterResultsByLevel(this.value);
-        });
-    }
-    
-    // Setup level filter search button
-    const levelSearchBtn = document.getElementById('level-search-btn');
-    if (levelSearchBtn && levelFilter) {
-        levelSearchBtn.addEventListener('click', function() {
-            const selectedLevel = levelFilter.value;
-            filterResultsByLevel(selectedLevel);
-        });
-    }
-    
-    // Track residence country change for currency conversion
-    const residenceSelect = document.getElementById('residence-country');
-    if (residenceSelect) {
-        residenceSelect.addEventListener('change', function() {
-            updateUserCurrency(this.value);
-        });
-    }
-    
-    // Setup subject autocomplete
-    setupSubjectAutocomplete();
+    // Load exchange rates first
+    loadExchangeRates().then(() => {
+        // Setup form submission
+        const form = document.getElementById('tuition-compare-form');
+        if (form) {
+            form.addEventListener('submit', handleFormSubmit);
+        }
+        
+        // Setup level filter dropdown
+        const levelFilter = document.getElementById('level-filter');
+        if (levelFilter) {
+            levelFilter.addEventListener('change', function() {
+                filterResultsByLevel(this.value);
+            });
+        }
+        
+        // Setup level filter search button
+        const levelSearchBtn = document.getElementById('level-search-btn');
+        if (levelSearchBtn && levelFilter) {
+            levelSearchBtn.addEventListener('click', function() {
+                const selectedLevel = levelFilter.value;
+                filterResultsByLevel(selectedLevel);
+            });
+        }
+        
+        // Track residence country change for currency conversion
+        const residenceSelect = document.getElementById('residence-country');
+        if (residenceSelect) {
+            residenceSelect.addEventListener('change', function() {
+                updateUserCurrency(this.value);
+            });
+        }
+        
+        // Setup subject autocomplete
+        setupSubjectAutocomplete();
+    });
 });
 
 // Setup subject autocomplete
